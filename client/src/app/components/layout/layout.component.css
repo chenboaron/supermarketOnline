@@ -8,7 +8,7 @@ section {
     grid-template-columns: repeat(12, 1fr); /* 12 columns */
     grid-template-rows: 4em auto 4em; /* 3 rows */
 }
-/* uierwfgj g wejvgfb gvn ikgfv  vjkh rejhvk hwjae vjhaervhj vhjr hje */
+
 section > aside, main, .info{
     margin: 20px;
 }
@@ -24,6 +24,7 @@ aside {
 main {
     grid-column: span 4;  
 }
+
 .info {
     grid-column: span 4;   
 } 
