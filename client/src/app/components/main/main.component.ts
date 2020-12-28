@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserLoginDetails } from 'src/app/models/UserLoginDetails';
 import { UserService } from 'src/app/services/UserService';
-
+import {MatInputModule} from '@angular/material/input';
 
 // For each component there is a selector that you can use inside another component and call this component
 // here you have also the html and css template which are called when you use this main component

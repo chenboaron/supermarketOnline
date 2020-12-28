@@ -1,11 +1,27 @@
-
 <div class="login">
-    <form>
-       <input type="text" name="username" placeholder=" User name :" [(ngModel)]="userLoginDetails.userName"><br>
-       <input type="password" name="password" placeholder=" Password :" [(ngModel)]="userLoginDetails.password"><br>
-        <input type="button" (click)="login()" value="Login"/>
-        <input type="button"  value="sign up"/>
+    <!-- <form>
+        <input type="text" name="username" placeholder=" User name :" [(ngModel)]="userLoginDetails.userName"><br>
+        <input type="password" name="password" placeholder=" Password :" [(ngModel)]="userLoginDetails.password"><br>
+        <input type="button" (click)="login()" value="Login" />
+        <input type="button" value="sign up" />
 
-    </form>
+    </form> -->
+    <h1>Login</h1>
+    <div>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="chenboaron93@gmail.com" value="" [(ngModel)]="userLoginDetails.userName">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="" value="" [(ngModel)]="userLoginDetails.password">
+        </mat-form-field>
+    </div>
+    <div>
+        <input type="button" (click)="login()" value="Login" class="buttons" />
+        <input type="button" value="sign up" class="buttons" />
+    </div>
 
 </div>

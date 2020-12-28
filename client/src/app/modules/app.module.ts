@@ -13,6 +13,10 @@ import { RoutingModule } from './routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { InfoComponent } from '../components/info/info.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,8 +33,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     RouterModule, 
     RoutingModule,
     HttpClientModule,
-    MDBBootstrapModule.forRoot()
-
+    MDBBootstrapModule.forRoot(),
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [LayoutComponent]

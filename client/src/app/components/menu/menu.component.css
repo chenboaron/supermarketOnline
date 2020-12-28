@@ -2,7 +2,6 @@ a{
     display: block;
     color:blue;
     font-size: large;
-    margin: 10%
 }
 
 .the-chosen-one{
@@ -13,5 +12,9 @@ a{
 .panelB{
     width: 90%;
     height: 90%;
-    background-color: rgba(45, 24, 231, 0.63);
+    background-color: rgba(156, 215, 238, 0.801);
+    display:  flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 30px;
 }
