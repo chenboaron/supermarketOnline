@@ -1,0 +1,24 @@
+p{
+font-size: x-large;
+}
+.image{
+    height: 200px;
+    width: 300px;
+    background-image: url(2681795.png);
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.panelB{
+    width: 90%;
+    height: 90%;
+    background-color: rgba(156, 215, 238, 0.801);
+    display:  flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 30px;
+    align-items: center;
+}

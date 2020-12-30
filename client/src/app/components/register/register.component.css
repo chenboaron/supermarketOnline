@@ -1,0 +1,18 @@
+.register{
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); 
+
+}
+.step1, .step2{
+    margin: 50px;
+
+}
+
+.step1 {
+    grid-column: span 6;
+}
+
+.step2 {
+    grid-column: span 6;  
+}

@@ -8,11 +8,11 @@ import {MatInputModule} from '@angular/material/input';
 // the @ is a metadata - information about information
 
 @Component({
-    selector: 'app-main',
-    templateUrl: './main.component.html',
-    styleUrls: ['./main.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
-export class MainComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
 
     public userLoginDetails: UserLoginDetails;

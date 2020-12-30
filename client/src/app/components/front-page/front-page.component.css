@@ -1,0 +1,21 @@
+
+.allPanels{
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); 
+
+}
+.login, .about, .info{
+    margin: 20px;
+}
+
+.login {
+    grid-column: span 4;
+}
+
+.about {
+    grid-column: span 4;  
+}
+.info {
+    grid-column: span 4;   
+} 
