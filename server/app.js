@@ -13,7 +13,7 @@ const server = express();
 server.use(express.static('./uploads'));
 
 // Using CORS, and letting the user access our server, and manipulate information
-server.use(cors({ origin: "http://localhost:3000", credentials: true }));
+server.use(cors({ origin: "http://localhost:4200", credentials: true }));
 
 // Signing the 'login filter' to our server
 server.use(loginFilter());

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FrontPageComponent } from '../components/front-page/front-page.component';
 import { RegisterComponent } from '../components/register/register.component';
-
 const routes: Routes = [
     { path: "frontPage", component: FrontPageComponent },
     // { path: "products", canActivate: [LoginGuardService], component: ProductsComponent },

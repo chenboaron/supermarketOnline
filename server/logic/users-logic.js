@@ -25,7 +25,7 @@ const addUser = async (userData) => {
     if (isUserExistByUsername) {
         throw new ServerError(ErrorType.USER_NAME_ALREADY_EXIST);
     }
-    
+
     // Salting the user's password for a better Hash protection
     const saltedPassword = getSaltedPassword(userData.password);
 
@@ -102,7 +102,7 @@ const generateJWTtoken = (saltedUserName) => {
 
     // Generating a token that the user will receive, based on the salted username and a secret
 
-    const token = jwt.sign( { sub: saltedUserName }, config.secret);
+    const token = jwt.sign({ sub: saltedUserName }, config.secret);
     return token;
 }
 
@@ -136,11 +136,11 @@ const getUserInfo = (request) => {
 }
 
 const logout = (request) => {
-    
+
     // Deleting the user's data from the server's cache after a user has logged out
 
     let userCacheData = extractUserDataFromCache(request);
-    
+
     let userToken = userCacheData.token;
     userCache.delete(userToken);
 }
@@ -160,7 +160,7 @@ const login = async (userData, isLoginRightAfterRegistration) => {
         // Changing the user's password to a Hashed password
         userData.password = crypto.createHash('md5').update(saltedPassword).digest('hex');
     }
-
+    console.log("userData.password = " + userData.password);
     // Sending the user's data to the DAO preset, and waiting to get the response
     const userLoginData = await usersDao.login(userData);
 
@@ -168,7 +168,7 @@ const login = async (userData, isLoginRightAfterRegistration) => {
     const userType = userLoginData.userType;
     const userName = userLoginData.userName;
     const userID = userLoginData.userID;
-    
+
     // Salting the user's username for a better token protection
     const saltedUserName = getSaltedUserName(userName);
 

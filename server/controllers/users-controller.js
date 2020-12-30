@@ -35,7 +35,7 @@ router.post('/login', async (request, response, next) => {
 
     // Extracting the data from the packet's body
     let userData = request.body;
-
+console.log("userData = " +  userData);
     try {
         let successfullLoginData = await usersLogic.login(userData);
 

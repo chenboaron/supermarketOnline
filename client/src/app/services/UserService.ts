@@ -12,6 +12,7 @@ import { UserLoginDetails } from '../models/UserLoginDetails';
 export class UserService {
     // private http: HttpClient;
     private loginToken:string;
+    public userType : string;
 
     // HttpClient injection (a class variable will be automatically created)
     constructor(private http: HttpClient) {
@@ -25,7 +26,8 @@ export class UserService {
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
         //  The http request will be sent after the subscribe() method will be called
-        return this.http.post<SuccessfulLoginServerResponse>("http://localhost:8080/users/login", userLoginDetails);
+        console.log("userLoginDetails = " + userLoginDetails.password, userLoginDetails.userName);
+        return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/login", userLoginDetails);
     }
 
     public createUser(userLoginDetails: UserLoginDetails): Observable<void> {        

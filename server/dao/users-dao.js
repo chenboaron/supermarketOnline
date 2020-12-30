@@ -6,6 +6,7 @@ let ServerError = require("../errors/server-error");
 const login = async (user) => {
 
     // Creating the SQL query to get the user from the DB
+    console.log("user.password = " + user.password);
 
     const SQL = "SELECT User_Name as userName, User_Type as userType, User_ID as userID FROM users where User_Name =? and Password =?";
     const parameters = [user.userName, user.password];
