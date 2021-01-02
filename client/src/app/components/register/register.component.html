@@ -1,9 +1,71 @@
 <div class="register">
     <div class="step1">
-        <app-register-step1></app-register-step1>
+        <p>register-step1 works!</p>
+        <div>
+            <mat-form-field>
+                <mat-label>id</mat-label>
+                <input matInput placeholder="" value="" [(ngModel)]="userRegisterDetails.userId">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="" value="" [(ngModel)]="userRegisterDetails.userName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="" type="password" value="" [(ngModel)]="userRegisterDetails.password">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Password Confirm</mat-label>
+                <input matInput placeholder="" type="password" value="" >
+            </mat-form-field>
+        </div>
     </div>
     <div class="step2">
-        <app-register-step2></app-register-step2>
+        <p>register-step2 works!</p>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Select your City</mat-label>
+                <mat-select disableRipple  [(ngModel)]="userRegisterDetails.city">
+                    <mat-option value="City 1">City 1</mat-option>
+                    <mat-option value="City 2">City 2</mat-option>
+                    <mat-option value="City 3">City 3</mat-option>
+                    <mat-option value="City 4">City 4</mat-option>
+                    <mat-option value="City 5">City 5</mat-option>
+                    <mat-option value="City 6">City 6</mat-option>
+                    <mat-option value="City 7">City 7</mat-option>
+                    <mat-option value="City 8">City 8</mat-option>
+                    <mat-option value="City 9">City 9</mat-option>
+                    <mat-option value="City 10">City 10</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Street</mat-label>
+                <input matInput placeholder="" value=""  [(ngModel)]="userRegisterDetails.street">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="" value="" [(ngModel)]="userRegisterDetails.firstName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="" value=""  [(ngModel)]="userRegisterDetails.lastName">
+            </mat-form-field>
+        </div>
+        <div>
+            <button type="submit" class="buttons"  (click)="register()">submit</button>
+        </div>
     </div>
 
 </div>

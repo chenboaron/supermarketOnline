@@ -1,21 +1,24 @@
 <div class="login">
     <h1>Login</h1>
-    <form>
-
-        <div>
+    <form #loginForm="ngForm" [formGroup]="userDetailsForm" (submit)="login()">
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input matInput placeholder="chenboaron93@gmail.com" name="username" value="" [(ngModel)]="userLoginDetails.userName">
+                <input matInput placeholder="chenboaron93@gmail.com" name="username" value="" [formControl]="userName">
             </mat-form-field>
-        </div>
-        <div>
+            <br>
             <mat-form-field>
                 <mat-label>Password</mat-label>
-                <input matInput placeholder="" type="password" name="password" value="" [(ngModel)]="userLoginDetails.password">
+                <input matInput placeholder="" type="password" name="password" value="" [formControl]="password">
             </mat-form-field>
-        </div>
         <div>
-            <input type="button" (click)="login()" value="Login" class="buttons" />
+            <br>
+            <span *ngIf="userName.errors?.required && userName.touched">Invalid username</span>
+            <br>
+            <span *ngIf="userName.errors?.pattern && userName.touched">Name must be capitalized</span>
+            <br>
+            <span *ngIf="password.invalid && password.touched">Missing password</span>
+            <br>
+            <input [disabled]="loginForm.form.invalid" type="button" (click)="login()" value="Login" class="buttons" />
             <a routerLink="/register" type="button" class="buttons">sign up</a>
         </div>
     </form>

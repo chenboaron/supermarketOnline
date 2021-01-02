@@ -3,5 +3,4 @@ export class SuccessfulLoginServerResponse{
         public token?:number,       
         public userType?:string
     ){}
-
 }

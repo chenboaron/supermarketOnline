@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SuccessfulLoginServerResponse } from '../models/SuccessfulLoginServerResponse';
 import { UserLoginDetails } from '../models/UserLoginDetails';
+import { UserRegisterDetails } from '../models/UserRegisterDetails';
 
 
 @Injectable({
@@ -30,9 +31,10 @@ export class UserService {
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/login", userLoginDetails);
     }
 
-    public createUser(userLoginDetails: UserLoginDetails): Observable<void> {        
-        
-        return this.http.post<void>("http://localhost:8080/users", userLoginDetails);
+    public register(userRegisterDetails: UserRegisterDetails): Observable<SuccessfulLoginServerResponse> {      
+
+        console.log("userRegisterDetails = " + userRegisterDetails.password, userRegisterDetails.userName);
+        return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/register", userRegisterDetails);
     }
 
     public getLoginToken(): string{

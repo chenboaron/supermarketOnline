@@ -181,7 +181,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `User_Name_UNIQUE` (`user_name`),
   UNIQUE KEY `User_ID_UNIQUE` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=395472689 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'chen','boharon','chenboaron93@gmail.com','a2b488d07fb0bc006a3754eadef589a1','','','admin');
+INSERT INTO `users` VALUES (204623250,'chen','boharon','chenboaron93@gmail.com','a2b488d07fb0bc006a3754eadef589a1','','','ADMIN'),(204623258,'mor','ezra','mor@gmail.com','a2b488d07fb0bc006a3754eadef589a1','City 9','alalalalalal','USER'),(208482599,'ben','ashkenazi','ben@gmail.com','a2b488d07fb0bc006a3754eadef589a1','City 4','yossi','USER'),(295474580,'avi','boharon','avi@gmail.com','a2b488d07fb0bc006a3754eadef589a1','City 5','cvcvcvcvcvcv','USER'),(298482600,'yossi','ezra','yossi@gmail.com','a2b488d07fb0bc006a3754eadef589a1','City 10','asdasadasd','USER'),(395472688,'orly','boharon','orly@gmail.com','a2b488d07fb0bc006a3754eadef589a1','City 1','cvcvcvcvcvcv','USER');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -203,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-31  1:41:02
+-- Dump completed on 2021-01-03  1:25:20
