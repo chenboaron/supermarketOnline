@@ -72,6 +72,12 @@ let ErrorType = {
     isShowStackTrace: true,
   },
 
+  CONFIRM_PASSWORD_DOES_NOT_MATCH: {
+    id: 13,
+    httpCode: 601,
+    message: "Your password does not match to confirm password",
+    isShowStackTrace: true,
+  },
 };
 
 module.exports = ErrorType;

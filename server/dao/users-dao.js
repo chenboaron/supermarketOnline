@@ -7,13 +7,12 @@ let ServerError = require("../errors/server-error");
  * @param {*} user 
  */
 const login = async (user) => {
-    const SQL = "SELECT  user_id as userId, user_name as userName, user_type as userType FROM users where user_name =? and password =?";
+    const SQL = "SELECT  user_id as userId, first_name as firstName, user_type as userType FROM users where user_name =? and password =?";
     const parameters = [user.userName, user.password];
     let userLoginResult;
     try {
         userLoginResult = await connection.executeWithParameters(SQL, parameters);
     }catch (error) {
-        console.log("error : " + error);
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
 
@@ -34,7 +33,6 @@ const addUser = async (user) => {
     try {
         await connection.executeWithParameters(SQL, parameters);
     }catch (error) {
-        console.log("lalalallaalal");
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
 }

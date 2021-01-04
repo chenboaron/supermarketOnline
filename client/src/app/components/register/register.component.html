@@ -1,71 +1,116 @@
-<div class="register">
-    <div class="step1">
-        <p>register-step1 works!</p>
-        <div>
-            <mat-form-field>
-                <mat-label>id</mat-label>
-                <input matInput placeholder="" value="" [(ngModel)]="userRegisterDetails.userId">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="" value="" [(ngModel)]="userRegisterDetails.userName">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Password</mat-label>
-                <input matInput placeholder="" type="password" value="" [(ngModel)]="userRegisterDetails.password">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Password Confirm</mat-label>
-                <input matInput placeholder="" type="password" value="" >
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="step2">
-        <p>register-step2 works!</p>
-        <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Select your City</mat-label>
-                <mat-select disableRipple  [(ngModel)]="userRegisterDetails.city">
-                    <mat-option value="City 1">City 1</mat-option>
-                    <mat-option value="City 2">City 2</mat-option>
-                    <mat-option value="City 3">City 3</mat-option>
-                    <mat-option value="City 4">City 4</mat-option>
-                    <mat-option value="City 5">City 5</mat-option>
-                    <mat-option value="City 6">City 6</mat-option>
-                    <mat-option value="City 7">City 7</mat-option>
-                    <mat-option value="City 8">City 8</mat-option>
-                    <mat-option value="City 9">City 9</mat-option>
-                    <mat-option value="City 10">City 10</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Street</mat-label>
-                <input matInput placeholder="" value=""  [(ngModel)]="userRegisterDetails.street">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>First Name</mat-label>
-                <input matInput placeholder="" value="" [(ngModel)]="userRegisterDetails.firstName">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <mat-label>Last Name</mat-label>
-                <input matInput placeholder="" value=""  [(ngModel)]="userRegisterDetails.lastName">
-            </mat-form-field>
-        </div>
-        <div>
-            <button type="submit" class="buttons"  (click)="register()">submit</button>
-        </div>
-    </div>
+<form  class="registerForm" #registerForm="ngForm" [formGroup]="userDetailsForm" (submit)="register()">
+    <div class="register">
 
-</div>
+        <div class="step1">
+            <p>register step1!</p>
+            <div>
+                <mat-form-field>
+                    <mat-label>id</mat-label>
+                    <input matInput placeholder="" value="" [formControl]="userId">
+                    <br>
+                    <mat-error *ngIf="userId.errors?.required">Id is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="userId.errors?.pattern">Id is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="" value="" [formControl]="userName">
+                    <br>
+                    <mat-error *ngIf="userName.errors?.required">Email is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="userName.errors?.pattern">Email is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="" type="password" value="" [formControl]="password">
+                    <br>
+                    <mat-error *ngIf="password.errors?.required">Password is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="password.errors?.pattern">Password is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Password Confirm</mat-label>
+                    <input matInput placeholder="" type="password" value="" [formControl]="passwordConfirm">
+                    <br>
+                    <mat-error *ngIf="passwordConfirm.errors?.required">Password Confirm is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="passwordConfirm.errors?.pattern">Password Confirm is not valid</mat-error>
+                    <br>
+                    <!-- <mat-error *ngIf="!isPasswordMatch(password,passwordConfirm)">The Password Confirm is not Match to Password</mat-error>
+                    <br> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="step2">
+            <p>register step2!</p>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select your City</mat-label>
+                    <mat-select disableRipple [formControl]="city">
+                        <mat-option value="Beer Sheva">Beer Sheva</mat-option>
+                        <mat-option value="Eilat">Eilat</mat-option>
+                        <mat-option value="Hadera">Hadera</mat-option>
+                        <mat-option value=">Haifa">Haifa</mat-option>
+                        <mat-option value="Herzliya">Herzliya</mat-option>
+                        <mat-option value="Jerusalem">Jerusalem</mat-option>
+                        <mat-option value="Netanya is the best city">Netanya is the best city</mat-option>
+                        <mat-option value="Petah Tikva">Petah Tikva</mat-option>
+                        <mat-option value="Raanana">Raanana</mat-option>
+                        <mat-option value="Tel Aviv">Tel Aviv</mat-option>
+                    </mat-select>
+                    <br>
+                    <mat-error *ngIf="city.errors?.required">City is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="city.errors?.pattern">City is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Street</mat-label>
+                    <input matInput placeholder="" value="" [formControl]="street">
+                    <br>
+                    <mat-error *ngIf="street.errors?.required">Street is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="street.errors?.pattern">Street is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="" value="" [formControl]="firstName">
+                    <br>
+                    <mat-error *ngIf="firstName.errors?.required">FirstName is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="firstName.errors?.pattern">FirstName is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="" value="" [formControl]="lastName">
+                    <br>
+                    <mat-error *ngIf="lastName.errors?.required">LastName is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="lastName.errors?.pattern">LastName is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <input [disabled]="registerForm.form.invalid" type="button" (click)="register()" value="submit" class="buttons" />
+            </div>
+
+        </div>
+    </div>
+</form>

@@ -26,12 +26,15 @@ const addUser = async (userData) => {
     if (isUserExistByUsername) {
         throw new ServerError(ErrorType.USER_NAME_ALREADY_EXIST);
     }
+  
+    if (userData.password != userData.passwordConfirm) {
+        throw new ServerError(ErrorType.CONFIRM_PASSWORD_DOES_NOT_MATCH);
+    }
+
     const isUserDataValid = validateUserDataIsValid(userData);
     if (isUserDataValid) {
         const saltedPassword = getSaltedPassword(userData.password);
-        console.log("saltedPassword = " + saltedPassword);
         const hashedPassword = generateHashedPassword(saltedPassword);
-        console.log("hashedPassword : " + hashedPassword);
         const userType = "USER";
         let userModifiedData = {
             userId: userData.userId,
@@ -47,10 +50,10 @@ const addUser = async (userData) => {
         await usersDao.addUser(userModifiedData);
         let userDataToLogin = {
             userName: userModifiedData.userName,
-            password: userModifiedData.password
+            password: userModifiedData.password,
+            firstName: userModifiedData.firstName
         }
-        console.log("userModifiedData.userName = " +      userModifiedData.userName);
-        console.log("userModifiedData.password = " +      userModifiedData.password);
+
 
         let userSuccessfulLoginServerResponse = login(userDataToLogin, true);
         return userSuccessfulLoginServerResponse;
@@ -181,15 +184,15 @@ const login = async (userData, isLoginRightAfterRegistration) => {
 
     const userLoginData = await usersDao.login(userData);
     const userType = userLoginData.userType;
-    const userName = userLoginData.userName;
+    const firstName = userLoginData.firstName;
     const userID = userLoginData.userID;
-    const saltedUserName = getSaltedUserName(userName);
-    const token = generateJWTtoken(saltedUserName);
-    saveUserDataToServerCache(userID, userName, userType, token);
+    const saltedFirstName= getSaltedUserName(firstName);
+    const token = generateJWTtoken(saltedFirstName);
+    saveUserDataToServerCache(userID, firstName, userType, token);
     const userSuccessfulLoginServerResponse = {
         token: token,
         userType: userType,
-        userName: userName
+        firstName: firstName
     }
     return userSuccessfulLoginServerResponse;
 }

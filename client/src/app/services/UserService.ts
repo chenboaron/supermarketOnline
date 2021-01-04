@@ -14,6 +14,7 @@ export class UserService {
     // private http: HttpClient;
     private loginToken:string;
     public userType : string;
+    public firstName : string;
 
     // HttpClient injection (a class variable will be automatically created)
     constructor(private http: HttpClient) {
@@ -27,13 +28,11 @@ export class UserService {
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
         //  The http request will be sent after the subscribe() method will be called
-        console.log("userLoginDetails = " + userLoginDetails.password, userLoginDetails.userName);
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/login", userLoginDetails);
     }
 
     public register(userRegisterDetails: UserRegisterDetails): Observable<SuccessfulLoginServerResponse> {      
 
-        console.log("userRegisterDetails = " + userRegisterDetails.password, userRegisterDetails.userName);
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/register", userRegisterDetails);
     }
 
@@ -44,4 +43,10 @@ export class UserService {
     public setLoginToken(token:any): void{
         this.loginToken = token;
     }
+
+    public getFirstName(): string{
+        return this.firstName;
+    }
+    
+
 }
