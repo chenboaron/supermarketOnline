@@ -206,14 +206,12 @@ const updateProduct = async (request, ProductID, newProductData) => {
         newProductData.imageURL = imageName;
 
         if (isProductValid(newProductData)) {
-
             const options = {
                 url: imageURL,
                 dest: './uploads/' + imageName
             }
 
             await productsDao.updateProduct(productID, newProductData);
-    
             await download.image(options).then(() => {
                 
                 fs.unlinkSync('./uploads/' + imageFileName);
