@@ -124,76 +124,19 @@ const validateVacationPrice = (vacationPrice) => {
 
 // -------------- Vacation's Server Logic Functions -------------- //
 
-const getAllVacations = async () => {
+const getAllProducts = async () => {
 
     // Retrieving all the vacations from the DAO preset
 
-    let allVacations = await vacationsDao.getAllVacations();
-    for (let vacation of allVacations) {
-        vacation.imageURL = 'http://localhost:3001/' + vacation.imageURL;
+    let allProducts = await productsDao.getAllProducts();
+    for (let product of allProducts) {
+        product.imageURL = 'http://localhost:3001/' + product.imageURL;
     }
-    return allVacations;
+    return allProducts;
 }
 
-const getFavoriteVacations = async (request) => {
 
-    // Getting the user's favorite vacations
-
-    let userData = extractUserDataFromCache(request);
-    let userID = userData.userID;
-    let userType = userData.userType
-
-    // Only 'USER' type can retrieve favorite vacations
-    if (userType === "USER") {
-
-        // Retrieving all the user's favorite vacations from the DAO preset
-        let favoriteVacations = await vacationsDao.getFavoriteVacations(userID);
-        for (let vacation of favoriteVacations) {
-            vacation.imageURL = 'http://localhost:3001/' + vacation.imageURL;
-        }
-        return favoriteVacations;
-    }
-
-    return;
-}
-
-const getAllFollowedVacations = async (request) => {
-
-    // Getting all the vacations that has more than 1 followers, for the 'Reports' page
-    
-    let userData = extractUserDataFromCache(request);
-    let userType = userData.userType
-
-    // Only 'ADMIN' type can get the followed vacations
-    if (userType === "ADMIN") {
-
-        // Retrieving all the followed vacations from the DAO preset
-        let allFollowedVacations = await vacationsDao.getAllFollowedVacations();
-        return allFollowedVacations;
-    }
-
-    return;
-}
-
-const setFollowedVacationToUser = async (request, vacationID) => {
-    
-    let userData = extractUserDataFromCache(request);
-    let userID = userData.userID;
-
-    // Sending the selected vacation's ID and the user's ID from the cache
-    await vacationsDao.setFollowedVacationToUser(vacationID, userID);
-}
-
-const unfollowUserVacation = async (request, vacationID) => {
-
-    let userCacheData = extractUserDataFromCache(request);
-    let userID = userCacheData.userID;
-
-    // Sending the selected vacation's ID and the user's ID from the cache
-    await vacationsDao.unfollowUserVacation(vacationID, userID);
-}
-
-const addVacation = async (request, newVacationData) => {
+const addProduct = async (request, newVacationData) => {
 
     let userCacheData = extractUserDataFromCache(request);
     let userType = userCacheData.userType;
@@ -202,20 +145,18 @@ const addVacation = async (request, newVacationData) => {
     if (userType === "ADMIN") {
         
         const imageName = Date.parse(new Date()) + '.jpg';
-        const imageURL = newVacationData.imageURL;
+        const imageURL = newProductData.imageURL;
 
         const options = {
             url: imageURL,
             dest: './uploads/' + imageName
         }
 
-        if (isVacationValid(newVacationData)) {
+        if (isProductValid(newProductData)) {
 
-            // Sending the selected vacation's data to the DAO preset, in order to add it to the DB
-            newVacationData.imageURL = imageName;
-            let newlyAddedVacation = await vacationsDao.addVacation(newVacationData);
+            newProductData.imageURL = imageName;
+            let newlyAddedProduct = await productDao.addProduct(newProductData);
     
-            // Downloading the image locally to our server
             await download.image(options).then(() => {
               console.log('Image Saved Locally!');
             })
@@ -223,21 +164,17 @@ const addVacation = async (request, newVacationData) => {
                 throw new ServerError(ErrorType.BAD_IMAGE);
             });
     
-            newlyAddedVacation[0].imageURL = `http://localhost:3001/${imageName}`;
-            return newlyAddedVacation;
-        }
-
-        else {
+            newlyAddedProduct[0].imageURL = `http://localhost:3001/${imageName}`;
+            return newlyAddedProduct;
+        }else {
             throw new ServerError(ErrorType.ACTION_NOT_ALLOWED);
         }
-    }
-
-    else {
+    }else {
         throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
     }
 }
 
-const deleteVacation = async (request, vacationID) => {
+const deleteProduct = async (request, productID) => {
 
     let userCacheData = extractUserDataFromCache(request);
     let userType = userCacheData.userType;
@@ -245,45 +182,38 @@ const deleteVacation = async (request, vacationID) => {
     console.log(imageToDeleteFromServer);
     const imageFileName = imageToDeleteFromServer.split('/')[3];
     
-    // Checking the server's cache if the user's type is an admin
     if (userType === "ADMIN") {
 
-        // Sending the selected vacation's ID and the user's ID from the cache, in order to delete the vacation from the DB
-        await vacationsDao.deleteVacation(vacationID);
+        await productsDao.deleteProduct(productID);
 
         fs.unlinkSync('./uploads/' + imageFileName);
-    }
-
-    else {
+    }else {
         throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
     }
 }
 
-const updateVacation = async (request, vacationID, newVacationData) => {
+const updateProduct = async (request, ProductID, newProductData) => {
 
     let userCacheData = extractUserDataFromCache(request);
     let userType = userCacheData.userType;
     
-    // Checking the server's cache if the user's type is an admin
     if (userType === "ADMIN") {
         
         const imageName = Date.parse(new Date()) + '.jpg';
-        const imageURL = newVacationData.imageURL;
+        const imageURL = newProductData.imageURL;
         const imageToDeleteFromServer = request.body.imageToDeleteFromServer;
         const imageFileName = imageToDeleteFromServer.split('/')[3];
-        newVacationData.imageURL = imageName;
+        newProductData.imageURL = imageName;
 
-        if (isVacationValid(newVacationData)) {
+        if (isProductValid(newProductData)) {
 
             const options = {
                 url: imageURL,
                 dest: './uploads/' + imageName
             }
 
-            // Sending the selected vacation's ID from the cache, and the vacation's data, in order to update the vacation in the DB
-            await vacationsDao.updateVacation(vacationID, newVacationData);
+            await productsDao.updateProduct(productID, newProductData);
     
-            // Downloading the image locally to our server
             await download.image(options).then(() => {
                 
                 fs.unlinkSync('./uploads/' + imageFileName);
@@ -296,9 +226,7 @@ const updateVacation = async (request, vacationID, newVacationData) => {
 
             return "http://localhost:3001/" + imageName;
         }
-    }
-
-    else {
+    }else {
         throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
     }
 }
@@ -306,10 +234,6 @@ const updateVacation = async (request, vacationID, newVacationData) => {
 
 module.exports = {
     getAllVacations,
-    getFavoriteVacations,
-    getAllFollowedVacations,
-    setFollowedVacationToUser,
-    unfollowUserVacation,
     addVacation,
     updateVacation,
     deleteVacation
