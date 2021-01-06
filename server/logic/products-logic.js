@@ -1,4 +1,4 @@
-const vacationsDao = require('../dao/vacations-dao');
+const productsDao = require('../dao/products-dao');
 const ServerError = require('../errors/server-error');
 const ErrorType = require("../errors/error-type");
 const userCache = require('../models/UserDataCache');
@@ -9,24 +9,23 @@ const fs = require('fs');
 
 // -------------- Vacation's Server Validations - In Case Someone Tries To Skip The UI Validations -------------- //
 
-const isVacationValid = (newVacationData) => {
+const isProductValid = (newVacationData) => {
 
-    const startDate = newVacationData.startDate;
-    const endDate = newVacationData.endDate;
+    const startDate = newProductData.startDate;
+    const endDate = newProductData.endDate;
 
-    const isVacationNameValid = validateVacationName(newVacationData.vacationName.trim());
-    const isVacationImageURLValid = validateVacationImageURL(newVacationData.imageURL.trim());
-    const isVacationDescrptionValid = validateVacationDescription(newVacationData.vacationDescription.trim());
-    const areVacationDatesValid = validateVacationDates(startDate, endDate);
-    const isVacationPriceValid = validateVacationPrice(newVacationData.vacationPrice);
+    const isProductNameValid = validateProductName(newProductData.productName.trim());
+    const isProductImageURLValid = validateProductImageURL(newProductData.imageURL.trim());
+    const isProductDescrptionValid = validateProductDescription(newProductData.productDescription.trim());
+    const areProductDatesValid = validateProductDates(startDate, endDate);
+    const isProductPriceValid = validateProductPrice(newProductData.ProductPrice);
 
-    if (isVacationNameValid) {
-        if (isVacationPriceValid) {
-            if (isVacationDescrptionValid) {
-                if (areVacationDatesValid) {
-                    if (isVacationImageURLValid) {
+    if (isProductNameValid) {
+        if (isProductPriceValid) {
+            if (isProductDescrptionValid) {
+                if (areProductDatesValid) {
+                    if (isProductImageURLValid) {
 
-                        // If all validations have passed
                         return true;
                     }
                 }

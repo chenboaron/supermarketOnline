@@ -1,7 +1,7 @@
 const express = require('express');
 const errorHandler = require('./errors/error-handler');
 const usersController = require('./controllers/users-controller');
-const vacationsController = require('./controllers/vacations-controller');
+const productsController = require('./controllers/products-controller');
 const loginFilter = require('./middleware/login-filter');
 const cors = require('cors');
 const registerSocketConnections = require('./socket/index');
@@ -25,7 +25,7 @@ server.use(express.json());
 server.use('/users', usersController);
 
 // Whenever the user is dealing with the URL '/vacations', use the controller 'usersController' to handle that request 
-server.use('/vacations', vacationsController);
+server.use('/products', productsController);
 
 // Registering the use of our Error Handler
 server.use(errorHandler);
