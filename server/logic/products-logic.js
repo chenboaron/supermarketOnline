@@ -233,8 +233,8 @@ const updateProduct = async (request, ProductID, newProductData) => {
 
 
 module.exports = {
-    getAllVacations,
-    addVacation,
-    updateVacation,
-    deleteVacation
+    getAllProducts,
+    addProduct,
+    updateProduct,
+    deleteProduct
 };
