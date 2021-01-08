@@ -7,27 +7,17 @@ import { UserRegisterDetails } from '../models/UserRegisterDetails';
 
 
 @Injectable({
-    // One object for the entire website
     providedIn: 'root'
 })
 export class UserService {
-    // private http: HttpClient;
     private loginToken:string;
     public userType : string;
     public firstName : string;
 
-    // HttpClient injection (a class variable will be automatically created)
-    constructor(private http: HttpClient) {
-        // this.http = http;
-    }
+    constructor(private http: HttpClient) {}
+
     public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
 
-        // Inside the brackets <> is the type of a successful server response
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // THE FOLLOWING LINE IS IS NOT AN HTTP REQUEST BEING SENT
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        
-        //  The http request will be sent after the subscribe() method will be called
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/login", userLoginDetails);
     }
 

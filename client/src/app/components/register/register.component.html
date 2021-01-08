@@ -45,8 +45,6 @@
                     <br>
                     <mat-error *ngIf="passwordConfirm.errors?.pattern">Password Confirm is not valid</mat-error>
                     <br>
-                    <!-- <mat-error *ngIf="!isPasswordMatch(password,passwordConfirm)">The Password Confirm is not Match to Password</mat-error>
-                    <br> -->
                 </mat-form-field>
             </div>
         </div>
@@ -108,7 +106,7 @@
                 </mat-form-field>
             </div>
             <div>
-                <input [disabled]="registerForm.form.invalid" type="button" (click)="register()" value="submit" class="buttons" />
+                <input [disabled]="registerForm.form.invalid && password != passwordConfirm" type="button" (click)="register()" value="submit" class="buttons" />
             </div>
 
         </div>

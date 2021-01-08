@@ -22,44 +22,34 @@ const getAllProducts = async () => {
     }
 }
 
-const addProduct = async (newVacationData) => {
+const addProduct = async (newProductData) => {
 
     const SQLInsertQuery = `INSERT INTO
-                                vacations
+                                    products
                                     (
-                                        Vacation_Name,
-                                        Vacation_Description,
-                                        Vacation_Price,
-                                        Start_Date,
-                                        End_Date,
-                                        Image_URL,
-                                        Followers_Count
+                                        product_name,
+                                        product_category,
+                                        product_Price,
+                                        product_image_URL,
                                     )
-                                    VALUES (?, ?, ?, ?, ?, ?, 0)`;
+                                    VALUES (?, ?, ?, ?)`;
 
-    const parameters = [newVacationData.vacationName, newVacationData.vacationDescription,newVacationData.vacationPrice, newVacationData.startDate,
-                        newVacationData.endDate, newVacationData.imageURL];
+    const parameters = [newProductData.productName, newProductData.productCategory, newProductData.productPrice, newProductData.imageURL];
 
-
-    // Retrieving the newly added vacation, because the DB generated the vacation's ID (Auto Incremented), and we need to retrieve it to the client
-
-    const getnewlyAddedVacationSQL = `SELECT
-                                            Vacation_ID as vacationID,
-                                            Vacation_Name as vacationName,
-                                            Vacation_Description as vacationDescription,
-                                            Vacation_Price as vacationPrice,
-                                            DATE_FORMAT(Start_Date, '%d/%m/%Y') as startDate,
-                                            DATE_FORMAT(End_Date, '%d/%m/%Y') as endDate,
-                                            Image_URL as imageURL,
-                                            Followers_Count as followersCount
+    const getnewlyAddedProductSQL = `SELECT
+                                            product_id as productId,
+                                            product_name as productName,
+                                            product_category as productCategory,
+                                            product_Price as productPrice,
+                                            product_image_URL as imageURL,
                                         From
-                                            vacations
+                                            products
                                         WHERE
-                                            Vacation_ID = (
+                                            product_id = (
                                                 SELECT
-                                                    MAX(Vacation_ID)
+                                                    MAX(product_id)
                                                 FROM
-                                                    vacations
+                                                    products
                                             )`;
 
     try {
@@ -72,24 +62,19 @@ const addProduct = async (newVacationData) => {
     }
 }
 
-const updateProduct = async (productID, newproductData) => {
-
-    // Updating the vacation's info according to the parameters received from the admin (client)
+const updateProduct = async (productId, newProductData) => {
 
     const SQL = `UPDATE
-                    vacations
+                    products
                     SET
-                    Vacation_Name = ?,
-                    Vacation_Description = ?,
-                    Vacation_Price = ?,
-                    Start_Date = ?,
-                    End_Date = ?,
-                    Image_URL = ?
+                    product_name = ?,
+                    product_category = ?,
+                    product_Price = ?,
+                    product_image_URL = ?,
                     WHERE
-                    Vacation_ID = ?`;
+                    product_id = ?`;
                     
-    const parameters = [newVacationData.vacationName, newVacationData.vacationDescription,newVacationData.vacationPrice, newVacationData.startDate,
-                        newVacationData.endDate, newVacationData.imageURL, vacationID];
+    const parameters = [newProductData.productName, newProductData.productCategory, newProductData.productPrice, newProductData.imageURL, productId];
 
     try {
         await connection.executeWithParameters(SQL, parameters);
@@ -98,30 +83,17 @@ const updateProduct = async (productID, newproductData) => {
     }
 }
 
-const deleteProduct = async (productID) => {
+const deleteProduct = async (productId) => {
 
-    // Creating the SQL queries for deleting the rows in the 'followed_vacations' and in the 'all vacations' tables
+    const SQL = `DELETE FROM
+                    products
+                    WHERE
+                    product_id = ?`;
 
-    const SQLDeleteFromFollowedTableQuery = `DELETE FROM
-                                                followed_vacations
-                                                    WHERE
-                                                Vacation_ID = ?`;
-
-    const SQLDeleteFromAllVacationsTableQuery = `DELETE FROM
-                                                    vacations
-                                                 WHERE
-                                                    Vacation_ID = ?`;
-
-    const parameter = [vacationID];
-
+    const parameter = [productId];
     try {
-
-        // Sending the SQL queries and the parameter to the 'connection wrapper' preset
-        await connection.executeWithParameters(SQLDeleteFromFollowedTableQuery, parameter);
-        await connection.executeWithParameters(SQLDeleteFromAllVacationsTableQuery, parameter);
+        await connection.executeWithParameters(SQL, parameter);
     } catch (error) {
-        
-        // Technical Error
         throw new ServerError(ErrorType.GENERAL_ERROR);
     }
 }

@@ -1,1 +1,19 @@
 <p>customer works!</p>
+
+
+<div *ngIf="isShowAllProducts">
+    <div *ngFor="let currentProduct of products" (click)=[(onProductClicked(currentProduct))]>
+
+        <div class="card border-info mb-3" style="max-width: 18rem;">
+            <div class="card-header">{{currentProduct.productName}}</div>
+            <div class="card-body text-info">
+                <p class="card-text">{{currentProduct.imageURL}}</p>
+                <h5 class="card-title">{{currentProduct.productPrice}}</h5>
+                <p class="card-text">{{currentProduct.productCategory}}</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

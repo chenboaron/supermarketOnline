@@ -77,9 +77,6 @@ export class RegisterComponent implements OnInit {
     const observable = this.usersService.register(this.userRegisterDetails);
 
     observable.subscribe(successfulServerRequestData => {
-
-
-      console.log("successfulServerRequestData.firstName = " + successfulServerRequestData.firstName);
       
       let userInfo = {
         token: successfulServerRequestData.token + "",
