@@ -9,6 +9,7 @@ import { ProductService } from 'src/app/services/ProductService';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit {
+  public showFiller = false;
 
   public products: Product[];
   public isShowAllProducts: boolean;
@@ -25,17 +26,9 @@ export class CustomerComponent implements OnInit {
 
       observable.subscribe(productsList => {
           this.products = productsList;
-          // console.error(this.coupons);
       }, error => {
-          alert('Failed to get coupons ' + JSON.stringify(error));
+          alert('Failed to get products ' + JSON.stringify(error));
       });
-
-      // this.userService.createUser(new UserLoginDetails("avi", "1234")).subscribe(successfulServerRequestData => {
-      //     console.log(successfulServerRequestData);                                        
-      // }, serverErrorResponse => {                     
-      //     alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.message);            
-      // }); 
-
 
   }
 

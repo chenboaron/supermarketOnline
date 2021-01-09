@@ -14,12 +14,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-
     public userDetailsForm: FormGroup;
     public userName: FormControl;
     public password: FormControl;
-
     public userLoginDetails: UserLoginDetails;
 
     constructor(private usersService: UserService, private router: Router) { }
@@ -29,17 +26,11 @@ export class LoginComponent implements OnInit {
         this.userLoginDetails.password = this.password.value;
 
         const observable = this.usersService.login(this.userLoginDetails);
-
         observable.subscribe(successfulServerRequestData => {
-            console.log("successfulServerRequestData.firstName = " + successfulServerRequestData.firstName);
-
-            let userInfo = {
-                token: successfulServerRequestData.token + "",
-                userType: successfulServerRequestData.userType,
-                firstName: successfulServerRequestData.firstName
-              }
-        
-              sessionStorage.setItem("userInfo",JSON.stringify(userInfo));
+            localStorage.setItem("token", "Bearer " + successfulServerRequestData.token);
+            localStorage.setItem("userType", successfulServerRequestData.userType);
+            localStorage.setItem("firstName", successfulServerRequestData.firstName);
+            
             this.usersService.userType = successfulServerRequestData.userType;
 
             if (successfulServerRequestData.userType == "USER") {
@@ -49,17 +40,10 @@ export class LoginComponent implements OnInit {
             if (successfulServerRequestData.userType == "ADMIN") {
                 this.router.navigate(["/admin"]);
             }
-
-            // if(successfulServerRequestData.userType == "COMPANY"){
-            //     this.router.navigate(["/company"]);
-            // }
         }, serverErrorResponse => {
-            // this.router.navigate(["/api/admin"]);
             alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.message);
         });
-
     }
-
     ngOnInit() {
         this.userLoginDetails = new UserLoginDetails();
 

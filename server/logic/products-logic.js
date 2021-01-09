@@ -82,9 +82,9 @@ const validateProductPrice = (productPrice) => {
 const getAllProducts = async () => {
 
     let allProducts = await productsDao.getAllProducts();
-    for (let product of allProducts) {
-        product.imageURL = 'http://localhost:3001/' + product.imageURL;
-    }
+    // for (let product of allProducts) {
+    //     product.imageURL = 'http://localhost:3001/' + product.imageURL;
+    // }
     return allProducts;
 }
 

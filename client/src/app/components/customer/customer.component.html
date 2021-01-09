@@ -1,19 +1,54 @@
-<p>customer works!</p>
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Auto-resizing sidenav</p>
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+    <button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button>
+  </mat-drawer>
 
+  <div class="example-sidenav-content">
+    <div class="navbarbuttons"> 
+      <button class="btnSidebar" type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
 
-<div *ngIf="isShowAllProducts">
-    <div *ngFor="let currentProduct of products" (click)=[(onProductClicked(currentProduct))]>
+      <button class="buttonsCategory" type="button" mat-button >
+        Meat and fish
+      </button> 
 
-        <div class="card border-info mb-3" style="max-width: 18rem;">
-            <div class="card-header">{{currentProduct.productName}}</div>
-            <div class="card-body text-info">
-                <p class="card-text">{{currentProduct.imageURL}}</p>
-                <h5 class="card-title">{{currentProduct.productPrice}}</h5>
-                <p class="card-text">{{currentProduct.productCategory}}</p>
-            </div>
-        </div>
+      <button class="buttonsCategory" type="button" mat-button >
+        Drinking
+      </button> 
+
+      <button class="buttonsCategory" type="button" mat-button >
+        Fruits and Vegetables
+      </button> 
+
+      <button class="buttonsCategory" type="button" mat-button >
+        Milk and eggs
+      </button>
     </div>
+    
 
-</div>
+
+    <div class="allProdicts" *ngIf="isShowAllProducts">
+      <div *ngFor="let currentProduct of products" (click)=[(onProductClicked(currentProduct))]>
 
 
+        <div class="card  border-info mb-3" style="width: 18rem;">
+          <img class="card-img-top" src={{currentProduct.imageURL}} alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Name : {{currentProduct.productName}}</h5>
+            <p class="card-text"> Category : {{currentProduct.productCategory}}</p>
+            <p class="card-text"> Price : {{currentProduct.productPrice}}$</p>
+            <a href="#" class="btn btn-primary">add to cart</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</mat-drawer-container>

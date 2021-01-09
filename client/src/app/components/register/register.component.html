@@ -6,7 +6,7 @@
             <div>
                 <mat-form-field>
                     <mat-label>id</mat-label>
-                    <input matInput placeholder="" value="" [formControl]="userId">
+                    <input matInput placeholder="" [formControl]="userId">
                     <br>
                     <mat-error *ngIf="userId.errors?.required">Id is required</mat-error>
                     <br>
@@ -17,7 +17,7 @@
             <div>
                 <mat-form-field>
                     <mat-label>Email</mat-label>
-                    <input matInput placeholder="" value="" [formControl]="userName">
+                    <input matInput placeholder="" [formControl]="userName">
                     <br>
                     <mat-error *ngIf="userName.errors?.required">Email is required</mat-error>
                     <br>
@@ -28,7 +28,7 @@
             <div>
                 <mat-form-field>
                     <mat-label>Password</mat-label>
-                    <input matInput placeholder="" type="password" value="" [formControl]="password">
+                    <input matInput placeholder="" type="password" [formControl]="password">
                     <br>
                     <mat-error *ngIf="password.errors?.required">Password is required</mat-error>
                     <br>
@@ -38,12 +38,14 @@
             </div>
             <div>
                 <mat-form-field>
-                    <mat-label>Password Confirm</mat-label>
-                    <input matInput placeholder="" type="password" value="" [formControl]="passwordConfirm">
+                    <mat-label *ngIf="password.value === passwordConfirm.value">Password Confirm</mat-label>
+                    <input matInput placeholder="" type="password" [formControl]="passwordConfirm">
                     <br>
                     <mat-error *ngIf="passwordConfirm.errors?.required">Password Confirm is required</mat-error>
                     <br>
                     <mat-error *ngIf="passwordConfirm.errors?.pattern">Password Confirm is not valid</mat-error>
+                    <br>
+                    <mat-label *ngIf="password.value !== passwordConfirm.value"> ALALALALLALALALALALALALALALALLALALALALALALALLALALALALAL</mat-label>
                     <br>
                 </mat-form-field>
             </div>
@@ -106,7 +108,7 @@
                 </mat-form-field>
             </div>
             <div>
-                <input [disabled]="registerForm.form.invalid && password != passwordConfirm" type="button" (click)="register()" value="submit" class="buttons" />
+                <input [disabled]="registerForm.form.invalid" type="button" (click)="register()" value="submit" class="buttons" />
             </div>
 
         </div>

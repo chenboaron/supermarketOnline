@@ -27,13 +27,10 @@ function execute(SQL) {
             if (error) {
 
                 console.log("Failed interacting with DB, calling reject");
-
-                // reject calls the 'catch' inside the DAO preset
                 reject(error);
                 return;
             }
 
-            // resolve = success, move on with the function inside the DAO preset
             resolve(result);
         });
     });

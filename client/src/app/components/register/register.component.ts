@@ -77,20 +77,16 @@ export class RegisterComponent implements OnInit {
     const observable = this.usersService.register(this.userRegisterDetails);
 
     observable.subscribe(successfulServerRequestData => {
-      
-      let userInfo = {
-        token: successfulServerRequestData.token + "",
-        userType: successfulServerRequestData.userType,
-        firstName: successfulServerRequestData.firstName
-      }
+ 
+      localStorage.setItem("token", "Bearer " + successfulServerRequestData.token);
+      localStorage.setItem("userType", successfulServerRequestData.userType);
+      localStorage.setItem("firstName", successfulServerRequestData.firstName);
 
-      sessionStorage.setItem("userInfo",JSON.stringify(userInfo));
       this.usersService.userType = successfulServerRequestData.userType;
 
       if (successfulServerRequestData.userType == "USER") {
         this.router.navigate(["/customer"]);
       }
-
       if (successfulServerRequestData.userType == "ADMIN") {
         this.router.navigate(["/admin"]);
       }

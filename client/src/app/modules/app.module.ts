@@ -23,6 +23,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { AdminComponent } from '../components/admin/admin.component';
 import { CustomerComponent } from '../components/customer/customer.component';
+import { UserService } from '../services/UserService';
+import { ProductService } from '../services/ProductService';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticationInterceptor } from '../components/interceptors/AuthenticationInterceptor';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -52,10 +57,14 @@ import { CustomerComponent } from '../components/customer/customer.component';
     BrowserAnimationsModule,
     MatMenuModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSidenavModule
 
   ],
-  providers: [],
+  providers: [UserService
+    , ProductService
+    , { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }
+    ],
   bootstrap: [LayoutComponent]
 })
 export class AppModule { }

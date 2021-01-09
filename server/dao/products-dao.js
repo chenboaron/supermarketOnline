@@ -5,23 +5,14 @@ let ServerError = require("../errors/server-error");
 
 const getAllProducts = async () => {
 
-    const SQL = `SELECT
-                    product_id as productId,
-                    product_name as productName,
-                    product_category as productCategory,
-                    product_Price as productPrice,
-                    product_image_URL as imageURL,
-                FROM
-                products`;
+    const SQL = "SELECT  product_id as productId, product_name as productName, product_category as productCategory, product_price as productPrice, product_image_URL as imageURL FROM products";
     try {
         let allProducts = await connection.execute(SQL);
-
         return allProducts
     } catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
 }
-
 const addProduct = async (newProductData) => {
 
     const SQLInsertQuery = `INSERT INTO

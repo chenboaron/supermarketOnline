@@ -12,6 +12,7 @@ router.get('/', async (request, response, next) => {
 
     try {
         let allProducts = await productsLogic.getAllProducts();
+        console.log("allProducts  :  "+ allProducts);
         response.json(allProducts);
     } catch (error) {
         return next(error);
