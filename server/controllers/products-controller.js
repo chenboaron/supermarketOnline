@@ -1,5 +1,4 @@
 const express = require('express');
-const multer = require('multer');
 let productsLogic = require("../logic/products-logic");
 
 // creating a new Router object
@@ -12,7 +11,6 @@ router.get('/', async (request, response, next) => {
 
     try {
         let allProducts = await productsLogic.getAllProducts();
-        console.log("allProducts  :  "+ allProducts);
         response.json(allProducts);
     } catch (error) {
         return next(error);

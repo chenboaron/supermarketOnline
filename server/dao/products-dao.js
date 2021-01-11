@@ -5,7 +5,7 @@ let ServerError = require("../errors/server-error");
 
 const getAllProducts = async () => {
 
-    const SQL = "SELECT  product_id as productId, product_name as productName, product_category as productCategory, product_price as productPrice, product_image_URL as imageURL FROM products";
+    const SQL = "SELECT  product_id as productId, product_name as productName,(SELECT `category_name` FROM `supermarket-online`.`products-categories` WHERE `supermarket-online`.`products`.product_category = `supermarket-online`.`products-categories`.category_id ) as productCategory, product_price as productPrice, product_image_URL as imageURL FROM `supermarket-online`.products";
     try {
         let allProducts = await connection.execute(SQL);
         return allProducts

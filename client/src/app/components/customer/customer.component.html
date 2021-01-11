@@ -8,46 +8,47 @@
   </mat-drawer>
 
   <div class="example-sidenav-content">
-    <div class="navbarbuttons"> 
+    <div class="navbarbuttons">
       <button class="btnSidebar" type="button" mat-button (click)="drawer.toggle()">
         Toggle sidenav
       </button>
 
-      <button class="buttonsCategory" type="button" mat-button >
+      <button class="buttonsCategory" (click)="onClikAllProducts()" type="button" mat-button>
+        All Products
+      </button>
+
+      <button class="buttonsCategory" (click)="onClikMeatAndFish()" type="button" mat-button>
         Meat and fish
-      </button> 
+      </button>
 
-      <button class="buttonsCategory" type="button" mat-button >
+      <button class="buttonsCategory"(click)="onClikDrinking()"  type="button" mat-button>
         Drinking
-      </button> 
+      </button>
 
-      <button class="buttonsCategory" type="button" mat-button >
+      <button class="buttonsCategory" (click)="onClikFruitsAndVegetables()" type="button" mat-button>
         Fruits and Vegetables
-      </button> 
+      </button>
 
-      <button class="buttonsCategory" type="button" mat-button >
+      <button class="buttonsCategory" (click)="onClikMilkAndEggs()"  type="button" mat-button>
         Milk and eggs
       </button>
+
+
     </div>
-    
+
 
 
     <div class="allProdicts" *ngIf="isShowAllProducts">
-      <div *ngFor="let currentProduct of products" (click)=[(onProductClicked(currentProduct))]>
-
-
-        <div class="card  border-info mb-3" style="width: 18rem;">
-          <img class="card-img-top" src={{currentProduct.imageURL}} alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Name : {{currentProduct.productName}}</h5>
-            <p class="card-text"> Category : {{currentProduct.productCategory}}</p>
-            <p class="card-text"> Price : {{currentProduct.productPrice}}$</p>
-            <a href="#" class="btn btn-primary">add to cart</a>
-          </div>
+      <div class="card  border-info " *ngFor="let currentProduct of currentProducts"
+        (click)=[(onProductClicked(currentProduct))]>
+        <img class="card-img-top" src={{currentProduct.imageURL}} alt="Card image cap">
+        <div class="card-body">
+          <h2>Name : {{currentProduct.productName}}</h2>
+          <h3> Category : {{currentProduct.productCategory}}</h3>
+          <h3> Price : {{currentProduct.productPrice}}$</h3>
         </div>
-
+        <a class="btn btn-primary">add to cart</a>
       </div>
-
     </div>
   </div>
 

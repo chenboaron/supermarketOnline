@@ -29,10 +29,6 @@
   border-right: 1px solid #00bcd4;
   padding: 10px;
 }
-  
-.allProdicts{
-    margin: 1%;
-}
 
 .card{
   background: none;
@@ -53,4 +49,28 @@
   color: blue;
   font-size: large;
   outline: none;
+}
+
+.allProdicts{
+  height: 90%;
+  width: 80%;
+  display: flex;
+  display: flex;
+  flex-flow: row wrap;
+  margin: auto;
+}
+
+.card{
+  height: 360px ;
+  width: 300px ;
+  background-color:white;
+  margin-top: 15px;
+  border: 3px solid #00bcd4;
+  margin: auto;
+  margin-top: 15px;
+}
+
+.card-img-top{
+  height: 180px ;
+  width: 290px ;
 }
