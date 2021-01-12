@@ -94,6 +94,7 @@ h2, h3{
 .card:hover{
   border: 1px solid #00bcd4 !important;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .card-body{
