@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { LayoutComponent } from '../components/layout/layout.component';
 import { HeaderComponent } from '../components/header/header.component';
-import { FooterComponent } from '../components/footer/footer.component';
 import { FrontPageComponent } from '../components/front-page/front-page.component';
 import { AboutComponent } from '../components/about/about.component';
 import { InfoComponent } from '../components/info/info.component';
@@ -28,20 +27,21 @@ import { ProductService } from '../services/ProductService';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from '../components/interceptors/AuthenticationInterceptor';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { PoductsPipeBySearch } from '../components/pipes/poducts-pipe-by-search.pipe';
 
 
 @NgModule({
   declarations: [
     LayoutComponent,
     HeaderComponent,
-    FooterComponent,
     InfoComponent,
     FrontPageComponent,
     AboutComponent,
     LoginComponent,
     RegisterComponent,
     AdminComponent,
-    CustomerComponent
+    CustomerComponent,
+    PoductsPipeBySearch
 
   ],
   imports: [
