@@ -1,21 +1,28 @@
 
 .allPanels{
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr); 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
 }
 .login, .about, .info{
     margin: 20px;
 }
 
-.login {
-    grid-column: span 4;
+.login { 
+    width: 30%;
+    height: 50%;
 }
 
 .about {
-    grid-column: span 4;  
+    width: 30%;
+    height: 50%;
+
 }
 .info {
-    grid-column: span 4;   
+    width: 30%;
+    height: 50%;
+
 } 

@@ -28,6 +28,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from '../components/interceptors/AuthenticationInterceptor';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { PoductsPipeBySearch } from '../components/pipes/poducts-pipe-by-search.pipe';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { PoductsPipeBySearch } from '../components/pipes/poducts-pipe-by-search.
     RegisterComponent,
     AdminComponent,
     CustomerComponent,
-    PoductsPipeBySearch
+    PoductsPipeBySearch,
 
   ],
   imports: [
@@ -58,6 +59,7 @@ import { PoductsPipeBySearch } from '../components/pipes/poducts-pipe-by-search.
     MatMenuModule,
     MatSelectModule,
     ReactiveFormsModule,
+    SweetAlert2Module,
     MatSidenavModule
 
   ],

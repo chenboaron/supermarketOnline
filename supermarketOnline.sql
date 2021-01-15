@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: supermarket-online
+-- Host: localhost    Database: supermarket-online
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -34,7 +34,7 @@ CREATE TABLE `cart-items` (
   KEY `FK_cart_id_idx` (`cart_id`),
   CONSTRAINT `FK_cart_id` FOREIGN KEY (`cart_id`) REFERENCES `shopping-carts` (`cart_id`),
   CONSTRAINT `FK_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `cart-items` (
 
 LOCK TABLES `cart-items` WRITE;
 /*!40000 ALTER TABLE `cart-items` DISABLE KEYS */;
+INSERT INTO `cart-items` VALUES (90,3,3,45,1),(91,5,1,4,1),(92,2,3,90,1),(93,4,2,16,1),(94,1,6,18,1);
 /*!40000 ALTER TABLE `cart-items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +153,7 @@ CREATE TABLE `shopping-carts` (
   UNIQUE KEY `cart_id_UNIQUE` (`cart_id`),
   KEY `FK_cart_owner_idx` (`cret_owner`),
   CONSTRAINT `FK_cart_owner` FOREIGN KEY (`cret_owner`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,6 +162,7 @@ CREATE TABLE `shopping-carts` (
 
 LOCK TABLES `shopping-carts` WRITE;
 /*!40000 ALTER TABLE `shopping-carts` DISABLE KEYS */;
+INSERT INTO `shopping-carts` VALUES (1,208482599,'2021-01-15');
 /*!40000 ALTER TABLE `shopping-carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,4 +207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-11  2:09:03
+-- Dump completed on 2021-01-15  5:51:53

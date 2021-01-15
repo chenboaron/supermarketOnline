@@ -13,8 +13,7 @@ function authenticateJwtRequestToken() {
         path: [
             // public routes that don't require authentication
             '/users/login',
-            '/users/register',
-            '/vacations'
+            '/users/register'
         ]
     });
 }

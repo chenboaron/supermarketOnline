@@ -26,6 +26,11 @@
     font-size: medium;
     outline: none;
   }
+
+.iconBtnSidebar{
+  width: 30px;
+  height: 30px;
+}
   
 .example-sidenav {
   width: 15%;

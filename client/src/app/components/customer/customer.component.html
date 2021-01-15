@@ -1,16 +1,20 @@
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
+    <h2>My Cart</h2>
+    <div class="allCartItems" *ngFor="let cartItem of  this.cartService.allCartItems">
+      <span class="amount">{{cartItem.amountOfProduct}}</span>
+      <span>x</span>
+      <span class="productName">{{cartItem.product.productName}}</span>
+      <span>-------------</span>
+      <span class="totalPrice">{{cartItem.totalPrice}}$</span>
+    </div>
+
   </mat-drawer>
 
   <div class="example-sidenav-content">
     <div class="navbarbuttons">
       <button class="btnSidebar" type="button" mat-button (click)="drawer.toggle()">
-        Toggle sidenav
+        <img class="iconBtnSidebar" src="shopping-cart.png">
       </button>
 
       <button class="buttonsCategory" (click)="onClikAllProducts()" type="button" mat-button>
@@ -21,7 +25,7 @@
         Meat and fish
       </button>
 
-      <button class="buttonsCategory"(click)="onClikDrinking()"  type="button" mat-button>
+      <button class="buttonsCategory" (click)="onClikDrinking()" type="button" mat-button>
         Drinking
       </button>
 
@@ -29,12 +33,13 @@
         Fruits and Vegetables
       </button>
 
-      <button class="buttonsCategory" (click)="onClikMilkAndEggs()"  type="button" mat-button>
+      <button class="buttonsCategory" (click)="onClikMilkAndEggs()" type="button" mat-button>
         Milk and eggs
       </button>
 
       <form class="searchInput form-inline md-form mr-auto mb-4">
-        <input class="form-control mr-sm-2" type="text" placeholder="search product..." aria-label="Search" name="searchInput" [(ngModel)]="searchValue">
+        <input class="form-control mr-sm-2" type="text" placeholder="search product..." aria-label="Search"
+          name="searchInput" [(ngModel)]="searchValue">
       </form>
 
 
@@ -51,17 +56,17 @@
           <h3> Category : {{currentProduct.productCategory}}</h3>
           <h3> Price : {{currentProduct.productPrice}}$</h3>
         </div>
-        <!-- <a class="btn btn-primary">add to cart</a> -->
       </div>
     </div>
   </div>
 
-  <div  >
+  <div>
     <select name="" id="" (change)="onChangeValue($event.target.value)">
-      <option *ngFor="let currentProduct of currentProducts"  value={{currentProduct.productName}}>{{currentProduct.productName}}</option>
+      <option *ngFor="let currentProduct of currentProducts" value={{currentProduct.productName}}>
+        {{currentProduct.productName}}</option>
     </select>
   </div>
- 
+
 
 
 </mat-drawer-container>
