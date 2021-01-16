@@ -136,9 +136,9 @@ const generateJWTtoken = (saltedUserName) => {
  * @param {*} userType 
  * @param {*} token 
  */
-const saveUserDataToServerCache = (userID, userName, userType, token) => {
+const saveUserDataToServerCache = (userId, userName, userType, token) => {
     const userCacheData = {
-        userID: userID,
+        userId: userId,
         userName: userName,
         userType: userType
     };
@@ -185,10 +185,10 @@ const login = async (userData, isLoginRightAfterRegistration) => {
     const userLoginData = await usersDao.login(userData);
     const userType = userLoginData.userType;
     const firstName = userLoginData.firstName;
-    const userID = userLoginData.userID;
+    const userId = userLoginData.userId;
     const saltedFirstName= getSaltedUserName(firstName);
     const token = generateJWTtoken(saltedFirstName);
-    saveUserDataToServerCache(userID, firstName, userType, token);
+    saveUserDataToServerCache(userId, firstName, userType, token);
     const userSuccessfulLoginServerResponse = {
         token: token,
         userType: userType,

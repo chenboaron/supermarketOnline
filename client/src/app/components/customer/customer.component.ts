@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartItem } from 'src/app/models/CartItem';
+import { AllCartItems } from 'src/app/models/AllCartItems';
 import { CartItemToServer } from 'src/app/models/CartItemToServer';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart-service';
@@ -50,6 +50,18 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error));
     });
 
+
+    let observableOfCart = this.cartService.getCart();
+
+    observableOfCart.subscribe(allCartItemsFromServer => {
+      this.cartService.allCartItems=allCartItemsFromServer;
+
+
+    }, error => {
+      alert('Failed to get products ' + JSON.stringify(error));
+    });
+
+
   }
 
   public onProductClicked(product: Product) {
@@ -67,19 +79,23 @@ export class CustomerComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         let input = document.getElementById("amountOfProduct") as HTMLInputElement;
-        let amountOfProduct = +input.value;
+        let amount = +input.value;
 
-        let cartItemToServer = new CartItemToServer(product.productId, amountOfProduct, 1);
+        if (amount <= 0 || amount > 100) {
+          alert("amount Of Product should be between 1 and 100");
+          return;
+        }
 
+        let cartItemToServer = new CartItemToServer(product.productId, amount, 1); //todo: cart id is a mock 
         let observable = this.cartService.addItemToCart(cartItemToServer);
 
         observable.subscribe(() => {
-          let newItem = new CartItem(product, amountOfProduct, amountOfProduct * product.productPrice, 1);
+          let newItem = new AllCartItems(product.productId, amount, amount * product.productPrice,product.productName);
           let isItemExist: boolean = false;
           for (let index = 0; index < this.cartService.allCartItems.length; index++) {
-            if (this.cartService.allCartItems[index].product.productId === newItem.product.productId) {
-              this.cartService.allCartItems[index].amountOfProduct = newItem.amountOfProduct;
-              this.cartService.allCartItems[index].totalPrice = newItem.amountOfProduct*newItem.product.productPrice;
+            if (this.cartService.allCartItems[index].productId === newItem.productId) {
+              this.cartService.allCartItems[index].amount = newItem.amount;
+              this.cartService.allCartItems[index].totalPrice = newItem.amount * product.productPrice;
               isItemExist = true;
             }
           }

@@ -3,6 +3,21 @@ let cartsLogic = require("../logic/carts-logic");
 
 const router = express.Router();
 
+
+
+
+router.get('/', async (request, response, next) => {
+
+    try {
+        let allCartItems = await cartsLogic.getAllCartItems(request);
+        response.json(allCartItems);
+    } catch (error) {
+        return next(error);
+    }
+});
+
+
+
 router.post('/addProductToCart', async (request, response, next) => {
 
     let newProductData = request.body;

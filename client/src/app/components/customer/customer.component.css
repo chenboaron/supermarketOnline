@@ -19,11 +19,9 @@
 }
 
 .btnSidebar{
-    display: inline-block;
-    border: 2px solid #00bcd4 !important;
+    border: 2px solid hsl(187, 100%, 42%) !important;
     background: none;
     color:#00bcd4 !important;
-    font-size: medium;
     outline: none;
   }
 

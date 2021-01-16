@@ -2,9 +2,9 @@
   <mat-drawer #drawer class="example-sidenav" mode="side">
     <h2>My Cart</h2>
     <div class="allCartItems" *ngFor="let cartItem of  this.cartService.allCartItems">
-      <span class="amount">{{cartItem.amountOfProduct}}</span>
+      <span class="amount">{{cartItem.amount}}</span>
       <span>x</span>
-      <span class="productName">{{cartItem.product.productName}}</span>
+      <span class="productName">{{cartItem.productName}}</span>
       <span>-------------</span>
       <span class="totalPrice">{{cartItem.totalPrice}}$</span>
     </div>
