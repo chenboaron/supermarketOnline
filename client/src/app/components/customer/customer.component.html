@@ -7,7 +7,14 @@
       <span class="productName">{{cartItem.productName}}</span>
       <span>-------------</span>
       <span class="totalPrice">{{cartItem.totalPrice}}$</span>
+      <button class="removeButton" (click)="onClikRemove(cartItem)">
+        <img class="removeIcon" src="https://img.icons8.com/cute-clipart/344/filled-trash.png" alt="">
+      </button>
+      <br>
+      <br>
     </div>
+    <span class="sumPrice">price of all items:  {{this.sumPrice}}$</span>
+
 
   </mat-drawer>
 

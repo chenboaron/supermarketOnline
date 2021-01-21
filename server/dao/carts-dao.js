@@ -8,7 +8,7 @@ const getAllCartItems = async (id) => {
     const SQL = "SELECT c.product_id as productId, c.amount as amount, c.total_price as totalPrice, (SELECT product_name FROM products WHERE product_id = c.product_id) as productName FROM `shopping-carts` s LEFT JOIN `cart-items` c ON s.cart_id = c.cart_id WHERE s.cret_owner = ? AND s.is_open = '1'  ";
     const parameters = [id]
     try {
-        let allCartItems = await connection.executeWithParameters(SQL,parameters);
+        let allCartItems = await connection.executeWithParameters(SQL, parameters);
         return allCartItems
     } catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
@@ -18,11 +18,10 @@ const getAllCartItems = async (id) => {
 
 
 
-const addProductToCart = async (isProductExist, newProductData) => {
+const addProductToCart = async (isProductExist, newProductData, userId) => {
     if (isProductExist) {
-        const SQLUpdateQuery = "UPDATE `cart-items` SET amount=? , total_price=(SELECT product_price  FROM products  WHERE product_id = ?)*?  WHERE product_id=? And cart_id =?";
-        const parametersOfUpdate = [newProductData.amount, newProductData.productId, newProductData.amount, newProductData.productId, newProductData.cartId];
-
+        const SQLUpdateQuery = "UPDATE `cart-items` SET amount=? , total_price=(SELECT product_price  FROM products  WHERE product_id = ?)*?  WHERE product_id=? And cart_id =(select cart_id from  `shopping-carts` where cret_owner = ? and is_open='1')";
+        const parametersOfUpdate = [newProductData.amount, newProductData.productId, newProductData.amount, newProductData.productId, userId];
         try {
             await connection.executeWithParameters(SQLUpdateQuery, parametersOfUpdate);
 
@@ -31,9 +30,9 @@ const addProductToCart = async (isProductExist, newProductData) => {
         }
 
     } else {
-        const SQLInsertQuery = "INSERT INTO `cart-items` (product_id, amount, cart_id, total_price) VALUES (?,?,?,(SELECT product_price  FROM products  WHERE product_id = ?)*?)";
+        const SQLInsertQuery = "INSERT INTO `cart-items` (product_id, amount, cart_id, total_price) VALUES (?,?,(select cart_id from  `shopping-carts` where cret_owner = ? and is_open='1') ,(SELECT product_price  FROM products  WHERE product_id = ?)*?)";
 
-        const parameters = [newProductData.productId, newProductData.amount, newProductData.cartId, newProductData.productId, newProductData.amount];
+        const parameters = [newProductData.productId, newProductData.amount, userId, newProductData.productId, newProductData.amount];
 
         try {
             await connection.executeWithParameters(SQLInsertQuery, parameters);
@@ -45,9 +44,9 @@ const addProductToCart = async (isProductExist, newProductData) => {
 }
 
 
-const isProductExist = async (product) => {
-    const SQL = "SELECT product_id FROM `cart-items` WHERE product_id=? And cart_id =?  ";
-    const parameter = [product.productId, product.cartId];
+const isProductExist = async (product, userId) => {
+    const SQL = "SELECT product_id FROM `cart-items` WHERE product_id=? And cart_id =(select cart_id from  `shopping-carts` where cret_owner = ? and is_open='1')  ";
+    const parameter = [product.productId, userId];
 
     let productAlreadyExists;
 
@@ -60,15 +59,26 @@ const isProductExist = async (product) => {
     } catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
- 
+
 }
 
+const deleteProduct = async (productId) => {
 
+    const SQL = "DELETE FROM `cart-items` WHERE product_id = ?";
+
+    const parameter = [productId];
+    try {
+        await connection.executeWithParameters(SQL, parameter);
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR);
+    }
+}
 
 
 
 module.exports = {
     addProductToCart,
     isProductExist,
-    getAllCartItems
+    getAllCartItems,
+    deleteProduct
 };

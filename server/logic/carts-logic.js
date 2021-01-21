@@ -9,11 +9,11 @@ const extractUserDataFromCache = require('../models/ExtractUserDataFromCache');
 const addProductToCart = async (request, newProductData) => {
 
     let userCacheData = extractUserDataFromCache(request);
+    let userId = userCacheData.userId
     let userType = userCacheData.userType;
-
     if (userType === "USER") {
-        let isProductExist = await cartsDao.isProductExist(newProductData);
-        await cartsDao.addProductToCart(isProductExist, newProductData);
+        let isProductExist = await cartsDao.isProductExist(newProductData, userId);
+        await cartsDao.addProductToCart(isProductExist, newProductData, userId);
 
     } else {
         throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
@@ -34,8 +34,28 @@ const getAllCartItems = async (request) => {
 }
 
 
+const deleteItem = async (request, productId) => {
+
+    let userCacheData = extractUserDataFromCache(request);
+    let userType = userCacheData.userType;
+    // let imageToDeleteFromServer = request.body.imageToDeleteFromServer;
+    // console.log(imageToDeleteFromServer);
+    // const imageFileName = imageToDeleteFromServer.split('/')[3];
+
+    if (userType === "USER") {
+
+        await cartsDao.deleteProduct(productId);
+
+        // fs.unlinkSync('./uploads/' + imageFileName);
+    } else {
+        throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
+    }
+}
+
+
 
 module.exports = {
     addProductToCart,
-    getAllCartItems
+    getAllCartItems,
+    deleteItem
 };

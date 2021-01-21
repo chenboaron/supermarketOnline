@@ -12,17 +12,20 @@ export class CartService {
 
   public allCartItems: AllCartItems[];
 
-    constructor(private http: HttpClient) {
-      this.allCartItems=[];
-     }
+  constructor(private http: HttpClient) {
+    this.allCartItems = [];
+  }
 
-  public addItemToCart(cartItemToServer : CartItemToServer): Observable < any > {
-  return this.http.post("http://localhost:3001/carts/addProductToCart", cartItemToServer);
-}
+  public addItemToCart(cartItemToServer: CartItemToServer): Observable<any> {
+    return this.http.post("http://localhost:3001/carts/addProductToCart", cartItemToServer);
+  }
 
- public getCart(): Observable < any > {
-  return this.http.get("http://localhost:3001/carts");
-}
-
+  public getCart(): Observable<any> {
+    return this.http.get("http://localhost:3001/carts");
+  }
   
+  public removeCartItem(productID: Number): Observable<any> {
+    return this.http.delete("http://localhost:3001/carts/deleteItem/" + productID);
+  }
+
 }

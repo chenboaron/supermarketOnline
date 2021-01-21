@@ -22,18 +22,21 @@ export class CustomerComponent implements OnInit {
   public milkAndEggs: Product[];
   public searchValue: string;
 
-
+  public sumPrice: number;
 
 
   public isShowAllProducts: boolean;
 
   constructor(private productService: ProductService, public cartService: CartService, public router: Router) {
+
   }
 
   ngOnInit() {
     this.products = [];
     this.currentProducts = [];
     this.searchValue = "";
+    this.sumPrice=0;
+
 
 
     this.isShowAllProducts = true;
@@ -46,6 +49,8 @@ export class CustomerComponent implements OnInit {
       this.drinking = this.currentProducts.filter(Product => Product.productCategory === "drinking");
       this.fruitsAndVegetables = this.currentProducts.filter(Product => Product.productCategory == "Fruits and Vegetables");
       this.milkAndEggs = this.currentProducts.filter(Product => Product.productCategory === "Milk and eggs");
+
+
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
     });
@@ -54,8 +59,9 @@ export class CustomerComponent implements OnInit {
     let observableOfCart = this.cartService.getCart();
 
     observableOfCart.subscribe(allCartItemsFromServer => {
-      this.cartService.allCartItems=allCartItemsFromServer;
+      this.cartService.allCartItems = allCartItemsFromServer;
 
+      this.calculatPrice();
 
     }, error => {
       alert('Failed to get products ' + JSON.stringify(error));
@@ -86,11 +92,11 @@ export class CustomerComponent implements OnInit {
           return;
         }
 
-        let cartItemToServer = new CartItemToServer(product.productId, amount, 1); //todo: cart id is a mock 
+        let cartItemToServer = new CartItemToServer(product.productId, amount);
         let observable = this.cartService.addItemToCart(cartItemToServer);
 
         observable.subscribe(() => {
-          let newItem = new AllCartItems(product.productId, amount, amount * product.productPrice,product.productName);
+          let newItem = new AllCartItems(product.productId, amount, amount * product.productPrice, product.productName);
           let isItemExist: boolean = false;
           for (let index = 0; index < this.cartService.allCartItems.length; index++) {
             if (this.cartService.allCartItems[index].productId === newItem.productId) {
@@ -104,6 +110,7 @@ export class CustomerComponent implements OnInit {
             this.cartService.allCartItems.push(newItem);
           }
 
+          this.calculatPrice();
         }, error => {
           alert('Failed to get carts ' + JSON.stringify(error));
         });
@@ -112,6 +119,32 @@ export class CustomerComponent implements OnInit {
 
       }
     })
+  }
+
+  public calculatPrice() {
+    this.sumPrice=0;
+    for (let index = 0; index < this.cartService.allCartItems.length; index++) {
+      this.sumPrice = this.sumPrice + this.cartService.allCartItems[index].totalPrice;
+    }
+
+  }
+
+  public onClikRemove(cartItem: AllCartItems) {
+
+    let observableOfCart = this.cartService.removeCartItem(cartItem.productId);
+
+    observableOfCart.subscribe(() => {
+      for (let index = 0; index < this.cartService.allCartItems.length; index++) {
+        if (this.cartService.allCartItems[index].productId === cartItem.productId) {
+          this.cartService.allCartItems.splice(index, 1);
+        }
+      }
+
+      this.calculatPrice();
+    }, error => {
+      alert('Failed to get products ' + JSON.stringify(error));
+    });
+
   }
 
   public showProducts() {

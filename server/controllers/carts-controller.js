@@ -44,19 +44,18 @@ router.post('/addProductToCart', async (request, response, next) => {
 
 
 
-// router.post('/deleteProduct/:id', async (request, response, next) => {
+router.delete('/deleteItem/:id', async (request, response, next) => {
+    let productID = request.params.id;
 
-//     let productID = request.params.id;
+    try {
+        await cartsLogic.deleteItem(request, productID);
 
-//     try {
-//         await productsLogic.deleteProduct(request, productID);
+        response.json();
+    } catch (error) {
 
-//         response.json();
-//     }catch (error) {
-
-//         return next(error);
-//     }
-// });
+        return next(error);
+    }
+});
 
 // router.put('/updateProduct/:id', async (request, response, next) => {
 
