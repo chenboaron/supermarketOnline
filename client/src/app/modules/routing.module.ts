@@ -5,6 +5,7 @@ import { FrontPageComponent } from '../components/front-page/front-page.componen
 import { RegisterComponent } from '../components/register/register.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { CustomerComponent } from '../components/customer/customer.component';
+import { OrderComponent } from '../components/order/order.component';
 const routes: Routes = [
     { path: "frontPage", component: FrontPageComponent },
     // { path: "products", canActivate: [LoginGuardService], component: ProductsComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
     // { path: "add-user", canActivate: [LoginGuardService], component: AddUserComponent },
     { path: "register", component: RegisterComponent },
     { path: "admin", component:  AdminComponent},
+    { path: "order", component:  OrderComponent},
     { path: "customer", component:  CustomerComponent},
     { path: "", redirectTo: "frontPage", pathMatch: "full" }, // pathMatch = התאמת המחרוזת הריקה לכלל הנתיב
     // { path: "**", component: Page404Component } // Page not Found (Must be the last one!!!)

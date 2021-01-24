@@ -1,0 +1,98 @@
+<div class="fullPage">
+    <div class="step1">
+        <h2>my cart</h2>
+        <div>
+            <form class="searchInput form-inline md-form mr-auto mb-4">
+                <input class="form-control mr-sm-2" type="text" placeholder="search product..." aria-label="Search"
+                    name="searchInput">
+            </form>
+        </div>
+        <br>
+        <br>
+        <div class="allCartItems" *ngFor="let cartItem of this.cartService.allCartItems">
+            <div class="item">
+                <span class="amount">{{cartItem.amount}} </span>
+                <span>x</span>
+                <span class="productName"> {{cartItem.productName}}</span>
+            </div>
+            <div>
+                <span class="totalPrice">{{cartItem.totalPrice}}$</span>
+            </div>
+
+
+        </div>
+        <br>
+        <span class="sumPrice">price of all items: {{this.sumPrice}}$</span>
+        <br>
+        <br>
+        <button routerLink="/customer" class="goToCustomer">back to shop</button>
+
+
+    </div>
+
+    <div class="step2">
+        <h2>order</h2>
+        <form class="orderForm" #orderForm="ngForm" [formGroup]="userDetailsForm" (submit)="order()">
+            <br>
+            <br>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select your City</mat-label>
+                    <mat-select disableRipple [formControl]="city">
+                        <mat-option value="Beer Sheva">Beer Sheva</mat-option>
+                        <mat-option value="Eilat">Eilat</mat-option>
+                        <mat-option value="Hadera">Hadera</mat-option>
+                        <mat-option value=">Haifa">Haifa</mat-option>
+                        <mat-option value="Herzliya">Herzliya</mat-option>
+                        <mat-option value="Jerusalem">Jerusalem</mat-option>
+                        <mat-option value="Netanya is the best city">Netanya is the best city</mat-option>
+                        <mat-option value="Petah Tikva">Petah Tikva</mat-option>
+                        <mat-option value="Raanana">Raanana</mat-option>
+                        <mat-option value="Tel Aviv">Tel Aviv</mat-option>
+                    </mat-select>
+                    <br>
+                    <mat-error *ngIf="city.errors?.required">City is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="city.errors?.pattern">City is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <br>
+            <br>
+            <div>
+                <mat-form-field>
+                    <mat-label>Street</mat-label>
+                    <input matInput placeholder="" value="" [formControl]="street">
+                    <br>
+                    <mat-error *ngIf="street.errors?.required">Street is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="street.errors?.pattern">Street is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+            </div>
+            <div>
+                <input type="date">
+            </div>
+            <br>
+            <br>
+            <div>
+                <h3>payments: </h3>
+                <div>
+                    <mat-form-field>
+                        <mat-label>credit card</mat-label>
+                        <input matInput placeholder="" value="" [formControl]="creditCard">
+                        <br>
+                        <mat-error *ngIf="creditCard.errors?.required">Street is required</mat-error>
+                        <br>
+                        <mat-error *ngIf="creditCard.errors?.pattern">Street is not valid</mat-error>
+                        <br>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br>
+            <br>
+            <button [disabled]="orderForm.form.invalid" type="button" (click)="order()" class="order">order</button>
+        </form>
+
+    </div>
+</div>

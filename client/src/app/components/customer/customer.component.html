@@ -2,18 +2,23 @@
   <mat-drawer #drawer class="example-sidenav" mode="side">
     <h2>My Cart</h2>
     <div class="allCartItems" *ngFor="let cartItem of  this.cartService.allCartItems">
-      <span class="amount">{{cartItem.amount}}</span>
-      <span>x</span>
-      <span class="productName">{{cartItem.productName}}</span>
-      <span>-------------</span>
-      <span class="totalPrice">{{cartItem.totalPrice}}$</span>
+      <div class="item">
+        <span class="amount">{{cartItem.amount}} </span>
+        <span>x</span>
+        <span class="productName"> {{cartItem.productName}}</span>
+        <span>-------------</span>
+        <span class="totalPrice">{{cartItem.totalPrice}}$</span>
+      </div>
       <button class="removeButton" (click)="onClikRemove(cartItem)">
         <img class="removeIcon" src="https://img.icons8.com/cute-clipart/344/filled-trash.png" alt="">
       </button>
-      <br>
-      <br>
+
     </div>
-    <span class="sumPrice">price of all items:  {{this.sumPrice}}$</span>
+    <br>
+    <span class="sumPrice">price of all items: {{this.sumPrice}}$</span>
+    <br>
+
+    <button routerLink="/order" class="goToOrder">go to order</button>
 
 
   </mat-drawer>
@@ -65,13 +70,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div>
-    <select name="" id="" (change)="onChangeValue($event.target.value)">
-      <option *ngFor="let currentProduct of currentProducts" value={{currentProduct.productName}}>
-        {{currentProduct.productName}}</option>
-    </select>
   </div>
 
 

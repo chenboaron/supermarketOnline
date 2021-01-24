@@ -29,6 +29,7 @@ import { AuthenticationInterceptor } from '../components/interceptors/Authentica
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { PoductsPipeBySearch } from '../components/pipes/poducts-pipe-by-search.pipe';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { OrderComponent } from '../components/order/order.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     AdminComponent,
     CustomerComponent,
     PoductsPipeBySearch,
+    OrderComponent,
 
   ],
   imports: [

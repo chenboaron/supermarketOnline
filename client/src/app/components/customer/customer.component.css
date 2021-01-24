@@ -130,5 +130,17 @@ h2, h3{
   border: none;
   background: none;
   outline: none;
+  margin-right: 10px;
 
 }
+
+.allCartItems{
+display: flex;
+justify-content: space-between;
+width: 100%;
+border-bottom: 1px solid #00bcd4;
+margin-bottom: 10px;
+align-items: center;
+padding-bottom: 10px;
+}
+
