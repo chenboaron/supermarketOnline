@@ -11,12 +11,26 @@ const addProductToCart = async (request, newProductData) => {
     let userCacheData = extractUserDataFromCache(request);
     let userId = userCacheData.userId
     let userType = userCacheData.userType;
-    if (userType === "USER") {
-        let isProductExist = await cartsDao.isProductExist(newProductData, userId);
-        await cartsDao.addProductToCart(isProductExist, newProductData, userId);
+    let isCartOpen = await cartsDao.isCartOpen(userId);
+    if (isCartOpen) {
+        if (userType === "USER") {
+            let isProductExist = await cartsDao.isProductExist(newProductData, userId);
+            await cartsDao.addProductToCart(isProductExist, newProductData, userId);
+
+        } else {
+            throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
+        }
 
     } else {
-        throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
+        if (userType === "USER") {
+            let date = new Date();
+            await cartsDao.openCart(userId, date);
+            let isProductExist = await cartsDao.isProductExist(newProductData, userId);
+            await cartsDao.addProductToCart(isProductExist, newProductData, userId);
+
+        } else {
+            throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
+        }
     }
 }
 
@@ -38,13 +52,33 @@ const deleteItem = async (request, productId) => {
 
     let userCacheData = extractUserDataFromCache(request);
     let userType = userCacheData.userType;
+    let id = userCacheData.userId
+
     // let imageToDeleteFromServer = request.body.imageToDeleteFromServer;
     // console.log(imageToDeleteFromServer);
     // const imageFileName = imageToDeleteFromServer.split('/')[3];
 
     if (userType === "USER") {
 
-        await cartsDao.deleteProduct(productId);
+        await cartsDao.deleteProduct(productId, id);
+
+        // fs.unlinkSync('./uploads/' + imageFileName);
+    } else {
+        throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
+    }
+}
+
+const deleteAllItems = async (request) => {
+    let userCacheData = extractUserDataFromCache(request);
+    let userType = userCacheData.userType;
+    let id = userCacheData.userId
+    // let imageToDeleteFromServer = request.body.imageToDeleteFromServer;
+    // console.log(imageToDeleteFromServer);
+    // const imageFileName = imageToDeleteFromServer.split('/')[3];
+
+    if (userType === "USER") {
+
+        await cartsDao.deleteAllItems(id);
 
         // fs.unlinkSync('./uploads/' + imageFileName);
     } else {
@@ -53,9 +87,9 @@ const deleteItem = async (request, productId) => {
 }
 
 
-
 module.exports = {
     addProductToCart,
     getAllCartItems,
-    deleteItem
+    deleteItem,
+    deleteAllItems
 };

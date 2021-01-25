@@ -17,9 +17,13 @@
     <br>
     <span class="sumPrice">price of all items: {{this.sumPrice}}$</span>
     <br>
-
-    <button routerLink="/order" class="goToOrder">go to order</button>
-
+    <br>
+    <div class="cratButton">
+      <button routerLink="/order" class="goToOrder">go to order -></button>
+      <button class="removeAllItemsButton" (click)="onClikRemoveAllItems()"> remove all items
+        <img class="removeIcon" src="https://img.icons8.com/cute-clipart/344/filled-trash.png" alt="">
+      </button>
+    </div>
 
   </mat-drawer>
 

@@ -53,8 +53,18 @@ export class OrderComponent implements OnInit {
     }
 
   }
-  public order() {
 
+  public order() {
+    // let observableOfCart = this.cartService.getCart();
+
+    // observableOfCart.subscribe(allCartItemsFromServer => {
+    //   this.cartService.allCartItems = allCartItemsFromServer;
+
+    //   this.calculatPrice();
+
+    // }, error => {
+    //   alert('Failed to get products ' + JSON.stringify(error));
+    // });
   }
 
 }

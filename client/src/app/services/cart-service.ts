@@ -23,9 +23,13 @@ export class CartService {
   public getCart(): Observable<any> {
     return this.http.get("http://localhost:3001/carts");
   }
-  
+
   public removeCartItem(productID: Number): Observable<any> {
     return this.http.delete("http://localhost:3001/carts/deleteItem/" + productID);
   }
 
+  public removeAllCartItems(): Observable<any> {
+    return this.http.delete("http://localhost:3001/carts/deleteAllItems");
+
+  }
 }

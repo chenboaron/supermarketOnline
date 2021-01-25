@@ -35,7 +35,7 @@ export class CustomerComponent implements OnInit {
     this.products = [];
     this.currentProducts = [];
     this.searchValue = "";
-    this.sumPrice=0;
+    this.sumPrice = 0;
 
 
 
@@ -55,6 +55,8 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error));
     });
 
+
+   
 
     let observableOfCart = this.cartService.getCart();
 
@@ -114,15 +116,12 @@ export class CustomerComponent implements OnInit {
         }, error => {
           alert('Failed to get carts ' + JSON.stringify(error));
         });
-
-
-
       }
     })
   }
 
   public calculatPrice() {
-    this.sumPrice=0;
+    this.sumPrice = 0;
     for (let index = 0; index < this.cartService.allCartItems.length; index++) {
       this.sumPrice = this.sumPrice + this.cartService.allCartItems[index].totalPrice;
     }
@@ -145,6 +144,20 @@ export class CustomerComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error));
     });
 
+  }
+
+  public onClikRemoveAllItems() {
+
+    let observableOfCart = this.cartService.removeAllCartItems();
+
+    observableOfCart.subscribe(() => {
+      let removeArray = [];
+      this.cartService.allCartItems = removeArray;
+
+      this.calculatPrice();
+    }, error => {
+      alert('Failed to get products ' + JSON.stringify(error));
+    });
   }
 
   public showProducts() {

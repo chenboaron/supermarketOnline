@@ -23,10 +23,10 @@ let ErrorType = {
     isShowStackTrace: true,
   },
 
-  THERE_ARE_NO_VACATIONS: {
+  CART_IS_NOT_OPEN: {
       id: 4,
       httpCode: 204,
-      message: "There Are No Vacations",
+      message: "The cart is close",
       isShowStackTrace: true,
   },
 

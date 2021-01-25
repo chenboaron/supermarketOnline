@@ -144,3 +144,28 @@ align-items: center;
 padding-bottom: 10px;
 }
 
+
+.removeAllItemsButton{
+  border-color: red;
+  background: none;
+  color: red;
+}
+
+.goToOrder{
+  border-color: green;
+  background: none;
+  color: green;
+}
+
+.sumPrice{
+  color: blue;
+  font-size: 20px;
+  border-bottom: 1px solid blue;
+}
+
+.cratButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+

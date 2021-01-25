@@ -31,16 +31,15 @@ router.post('/addProductToCart', async (request, response, next) => {
     }
 });
 
-// router.get('/', async (request, response, next) => {
 
-//     try {
-//         let allProducts = await productsLogic.getAllProducts();
-//         response.json(allProducts);
-//     } catch (error) {
-//         return next(error);
-//     }
-// });
-
+router.delete('/deleteAllItems', async (request , response, next) => {
+    try {
+        await cartsLogic.deleteAllItems(request);
+        response.json();
+    } catch (error) {
+        return next(error);
+    }
+});
 
 
 
@@ -57,22 +56,7 @@ router.delete('/deleteItem/:id', async (request, response, next) => {
     }
 });
 
-// router.put('/updateProduct/:id', async (request, response, next) => {
 
-
-//     let productID = request.params.id;
-//     let newProductData = request.body.newProductData;
-
-//     try {
-
-//         const imageURLToPreview = await productsLogic.updateProduct(request, productID, newProductData);
-
-//         response.json(imageURLToPreview);
-//     }catch (error) {
-
-//         return next(error);
-//     }
-// });
 
 
 module.exports = router;

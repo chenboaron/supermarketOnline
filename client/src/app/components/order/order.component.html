@@ -18,8 +18,6 @@
             <div>
                 <span class="totalPrice">{{cartItem.totalPrice}}$</span>
             </div>
-
-
         </div>
         <br>
         <span class="sumPrice">price of all items: {{this.sumPrice}}$</span>
@@ -71,7 +69,15 @@
                 </mat-form-field>
             </div>
             <div>
-                <input type="date">
+                <mat-form-field>
+                    <mat-label>Date</mat-label>
+                    <input matInput type="date"  value="" [formControl]="date">
+                    <br>
+                    <mat-error *ngIf="street.errors?.required">Date is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="street.errors?.pattern">Date is not valid</mat-error>
+                    <br>
+                </mat-form-field>
             </div>
             <br>
             <br>
@@ -82,9 +88,9 @@
                         <mat-label>credit card</mat-label>
                         <input matInput placeholder="" value="" [formControl]="creditCard">
                         <br>
-                        <mat-error *ngIf="creditCard.errors?.required">Street is required</mat-error>
+                        <mat-error *ngIf="creditCard.errors?.required">Credit card is required</mat-error>
                         <br>
-                        <mat-error *ngIf="creditCard.errors?.pattern">Street is not valid</mat-error>
+                        <mat-error *ngIf="creditCard.errors?.pattern">Credit card is not valid</mat-error>
                         <br>
                     </mat-form-field>
                 </div>
