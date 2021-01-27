@@ -3,6 +3,7 @@ const errorHandler = require('./errors/error-handler');
 const usersController = require('./controllers/users-controller');
 const productsController = require('./controllers/products-controller');
 const cartsController = require('./controllers/carts-controller');
+const ordersController = require('./controllers/orders-controller');
 
 const loginFilter = require('./middleware/login-filter');
 const cors = require('cors');
@@ -17,6 +18,8 @@ server.use(express.json());
 server.use('/users', usersController);
 server.use('/products', productsController);
 server.use('/carts', cartsController);
+server.use('/orders', ordersController);
+
 
 
 
