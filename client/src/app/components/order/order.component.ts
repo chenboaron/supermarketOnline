@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CartService } from 'src/app/services/cart-service';
 import { OrderService } from 'src/app/services/orderService';
 import { Order } from 'src/app/models/Order';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-order',
@@ -25,6 +26,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.sumPrice = 0;
+    this.orderDetails = new Order();
 
     this.creditCard = new FormControl("", [Validators.required, Validators.pattern("[0-9]{16}$")]);
     this.city = new FormControl("", Validators.required);
@@ -62,17 +64,27 @@ export class OrderComponent implements OnInit {
   }
 
   public order() {
+    console.log("this.city.value = " + this.city.value);
     this.orderDetails.city = this.city.value;
+    console.log("this.orderDetails.city = " + this.orderDetails.city);
+
     this.orderDetails.street = this.street.value;
-    this.orderDetails.creditCard = this.city.value;
-    this.orderDetails.date = this.street.value;
+    this.orderDetails.creditCard = this.creditCard.value;
+    this.orderDetails.date = this.date.value;
     
 
     let observable = this.orderService.order(this.orderDetails);
 
     observable.subscribe(() => {
-
-
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      console.log("yayyyy the order sucssfu");
+      
     }, error => {
       alert('Failed to order ' + JSON.stringify(error));
     });

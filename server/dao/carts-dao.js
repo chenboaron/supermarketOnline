@@ -1,6 +1,7 @@
 let connection = require("./connection-wrapper");
 let ErrorType = require("../errors/error-type");
 let ServerError = require("../errors/server-error");
+const { CART_IS_NOT_OPEN } = require("../errors/error-type");
 
 
 const getAllCartItems = async (id) => {
@@ -36,7 +37,6 @@ const addProductToCart = async (isProductExist, newProductData, userId) => {
             await connection.executeWithParameters(SQLInsertQuery, parameters);
 
         } catch (error) {
-            console.log(" error 2 in add product");
 
             throw new ServerError(ErrorType.GENERAL_ERROR);
         }
@@ -44,16 +44,17 @@ const addProductToCart = async (isProductExist, newProductData, userId) => {
 }
 
 const isCartOpen = async (userId) => {
-    const SQL = "SELECT is_open FROM `shopping-carts` WHERE cret_owner=?";
+    const SQL = "SELECT is_open FROM `shopping-carts` WHERE cret_owner=? and is_open='1'";
     const parameter = [userId];
     let cart;
     try {
         cart = await connection.executeWithParameters(SQL, parameter);
-        if (cart === null || cart.length === 0) {
+        if (cart.length === 0 || cart[0].is_open === 0) {
             return false;
         }
         return true;
     } catch (error) {
+        console.log("failed in is cart open function");
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
 
@@ -62,7 +63,6 @@ const isCartOpen = async (userId) => {
 const openCart = async (userId, date) => {
     const SQL = "INSERT INTO `shopping-carts` (cret_owner, cart_creation_date, is_open ) VALUES (?,?, '1')"
     const parameter = [userId, date];
-
     try {
         await connection.executeWithParameters(SQL, parameter);
 

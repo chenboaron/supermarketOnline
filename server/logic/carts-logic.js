@@ -24,6 +24,9 @@ const addProductToCart = async (request, newProductData) => {
     } else {
         if (userType === "USER") {
             let date = new Date();
+            date = date.getUTCFullYear() + '-' +
+                ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
+                ('00' + date.getUTCDate()).slice(-2);
             await cartsDao.openCart(userId, date);
             let isProductExist = await cartsDao.isProductExist(newProductData, userId);
             await cartsDao.addProductToCart(isProductExist, newProductData, userId);

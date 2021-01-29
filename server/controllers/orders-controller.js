@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 
-router.get('/', async (request, response, next) => {
+router.post('/', async (request, response, next) => {
     let newOrder = request.body;
     try {
         await ordersLogic.order(request, newOrder);
