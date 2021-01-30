@@ -64,10 +64,7 @@ export class OrderComponent implements OnInit {
   }
 
   public order() {
-    console.log("this.city.value = " + this.city.value);
     this.orderDetails.city = this.city.value;
-    console.log("this.orderDetails.city = " + this.orderDetails.city);
-
     this.orderDetails.street = this.street.value;
     this.orderDetails.creditCard = this.creditCard.value;
     this.orderDetails.date = this.date.value;
@@ -79,15 +76,21 @@ export class OrderComponent implements OnInit {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 1500
+        title: 'Your purchase was successful!',
+        html:
+        '<b>To download the receipt</b>, ' +
+        '<a href="//sweetalert2.github.io"> click here</a> ',
+        showConfirmButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(["/customer"]);
+        }
       })
-      console.log("yayyyy the order sucssfu");
       
     }, error => {
       alert('Failed to order ' + JSON.stringify(error));
     });
+    
   }
 
 }

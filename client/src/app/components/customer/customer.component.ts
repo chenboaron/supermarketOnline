@@ -66,7 +66,7 @@ export class CustomerComponent implements OnInit {
       this.calculatPrice();
 
     }, error => {
-      alert('Failed to get products ' + JSON.stringify(error));
+      alert('Failed to get carts ' + JSON.stringify(error));
     });
 
 

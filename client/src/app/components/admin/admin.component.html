@@ -1,1 +1,121 @@
-<p>admin works!</p>
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+
+        <div class="titleAndIcon">
+            <div>
+                <h2>Add/Edit product</h2>
+            </div>
+            <div>
+                <button (click)="onClickAdd()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
+
+
+        <div>
+            <form class="editProductForm" #editProductForm="ngForm" [formGroup]="productDetailsForm" (submit)="save()">
+                <mat-form-field>
+                    <mat-label>Product Name</mat-label>
+                    <input matInput placeholder="" [formControl]="productName">
+                    <br>
+                    <mat-error *ngIf="productName.errors?.required">productName is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="productName.errors?.pattern">productName is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Product Category</mat-label>
+                    <input matInput placeholder="" [formControl]="productCategory">
+                    <br>
+                    <mat-error *ngIf="productCategory.errors?.required">Product Category is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="productCategory.errors?.pattern">Product Category is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Product Price</mat-label>
+                    <input matInput placeholder=""  [formControl]="productPrice">
+                    <br>
+                    <mat-error *ngIf="productPrice.errors?.required">Product Price is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="productPrice.errors?.pattern">Product Price is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Image URL</mat-label>
+                    <input matInput placeholder=""  [formControl]="imageURL">
+                    <br>
+                    <mat-error *ngIf="imageURL.errors?.required">Image URL Confirm is required</mat-error>
+                    <br>
+                    <mat-error *ngIf="imageURL.errors?.pattern">Image URL Confirm is not valid</mat-error>
+                    <br>
+                </mat-form-field>
+                <br>
+                <div>
+                    <button (click)="save()" value="submit" class="btn btn-outline-danger">
+                        save
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+        <div class="navbarbuttons">
+            <button class="btnSidebar" type="button" mat-button (click)="drawer.toggle()">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <button class="buttonsCategory" (click)="onClikAllProducts()" type="button" mat-button>
+                All Products
+            </button>
+
+            <button class="buttonsCategory" (click)="onClikMeatAndFish()" type="button" mat-button>
+                Meat and fish
+            </button>
+
+            <button class="buttonsCategory" (click)="onClikDrinking()" type="button" mat-button>
+                Drinking
+            </button>
+
+            <button class="buttonsCategory" (click)="onClikFruitsAndVegetables()" type="button" mat-button>
+                Fruits and Vegetables
+            </button>
+
+            <button class="buttonsCategory" (click)="onClikMilkAndEggs()" type="button" mat-button>
+                Milk and eggs
+            </button>
+
+            <form class="searchInput form-inline md-form mr-auto mb-4">
+                <input class="form-control mr-sm-2" type="text" placeholder="search product..." aria-label="Search"
+                    name="searchInput" [(ngModel)]="searchValue">
+            </form>
+
+
+        </div>
+
+
+
+        <div class="allProducts" *ngIf="isShowAllProducts">
+            <div class="card  border-info "
+                *ngFor="let currentProduct of currentProducts | poductsPipeBySearch : searchValue"
+                (click)=[(onProductClicked(currentProduct))]>
+                <img class="card-img-top" src={{currentProduct.imageURL}} alt="Card image cap">
+                <div class="card-body">
+                    <h2>Name : {{currentProduct.productName}}</h2>
+                    <h3> Category : {{currentProduct.productCategory}}</h3>
+                    <h3> Price : {{currentProduct.productPrice}}$</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</mat-drawer-container>
