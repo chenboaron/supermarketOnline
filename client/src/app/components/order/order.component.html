@@ -71,7 +71,7 @@
             <div>
                 <mat-form-field>
                     <mat-label>Date</mat-label>
-                    <input matInput type="date"  value="" [formControl]="date">
+                    <input matInput type="date" value="" [formControl]="date">
                     <br>
                     <mat-error *ngIf="street.errors?.required">Date is required</mat-error>
                     <br>
@@ -101,4 +101,25 @@
         </form>
 
     </div>
+
 </div>
+
+
+<div class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Your purchase was successful!</h2>
+                
+            </div>
+            <div class="modal-body">
+                To download the receipt
+                <a (click)='onDownloadReceipt()' id="linkDownload"> click here</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)='goToCustomer()'>Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+

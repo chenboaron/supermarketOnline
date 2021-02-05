@@ -6,13 +6,14 @@ import { RegisterComponent } from '../components/register/register.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { CustomerComponent } from '../components/customer/customer.component';
 import { OrderComponent } from '../components/order/order.component';
+import { AdminGuard } from '../admin.guard';
 const routes: Routes = [
     { path: "frontPage", component: FrontPageComponent },
     // { path: "products", canActivate: [LoginGuardService], component: ProductsComponent },
     // { path: "users", canActivate: [LoginGuardService], component: UsersComponent },
     // { path: "add-user", canActivate: [LoginGuardService], component: AddUserComponent },
     { path: "register", component: RegisterComponent },
-    { path: "admin", component:  AdminComponent},
+    { path: "admin", canActivate:[AdminGuard] , component:  AdminComponent},
     { path: "order", component:  OrderComponent},
     { path: "customer", component:  CustomerComponent},
     { path: "", redirectTo: "frontPage", pathMatch: "full" }, // pathMatch = התאמת המחרוזת הריקה לכלל הנתיב

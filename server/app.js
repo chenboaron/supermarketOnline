@@ -7,7 +7,6 @@ const ordersController = require('./controllers/orders-controller');
 
 const loginFilter = require('./middleware/login-filter');
 const cors = require('cors');
-const registerSocketConnections = require('./socket/index');
 
 const server = express();
 server.use(express.static('./uploads'));
@@ -25,7 +24,6 @@ server.use('/orders', ordersController);
 
 server.use(errorHandler);
 
-registerSocketConnections(server);
 
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));

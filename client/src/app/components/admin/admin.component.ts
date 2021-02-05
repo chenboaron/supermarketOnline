@@ -23,6 +23,7 @@ export class AdminComponent implements OnInit {
   public isShowAllProducts: boolean;
 
   public productDetailsForm: FormGroup;
+  public productId: FormControl;
   public productName: FormControl;
   public productCategory: FormControl;
   public productPrice: FormControl;
@@ -52,7 +53,7 @@ export class AdminComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error));
     });
 
-
+    this.productId = new FormControl("");
     this.productName = new FormControl("", [Validators.required, Validators.pattern("[a-zA-Z ]{1,15}")]);
     this.productCategory = new FormControl("", [Validators.required, Validators.pattern("[a-zA-Z ]{1,30}")]);
     this.productPrice = new FormControl("", [Validators.required, Validators.pattern("[0-9]{4,25}")]);
@@ -61,7 +62,7 @@ export class AdminComponent implements OnInit {
 
     // Initializing the from group
     this.productDetailsForm = new FormGroup({
-
+      productId: this.productId,
       productName: this.productName,
       productCategory: this.productCategory,
       productPrice: this.productPrice,
@@ -71,27 +72,62 @@ export class AdminComponent implements OnInit {
 
   }
   public save() {
+    let productDetails = this.productDetailsForm.value;
+    let product = new Product(productDetails.productId, productDetails.productName, productDetails.productCategory, productDetails.productPrice, productDetails.imageURL);
 
+
+    let observable = this.productService.addOrEditProduct(product);
+
+    observable.subscribe(() => {
+      if (product.productId == -1) {
+        let observable = this.productService.getAllProducts();
+
+        observable.subscribe(productsList => {
+          this.products = productsList;
+          this.currentProducts = productsList;
+          this.meatAndFish = this.currentProducts.filter(Product => Product.productCategory === "Meat and fish");
+          this.drinking = this.currentProducts.filter(Product => Product.productCategory === "drinking");
+          this.fruitsAndVegetables = this.currentProducts.filter(Product => Product.productCategory == "Fruits and Vegetables");
+          this.milkAndEggs = this.currentProducts.filter(Product => Product.productCategory === "Milk and eggs");
+
+        }, error => {
+          alert('Failed to get products ' + JSON.stringify(error));
+        });
+      } else {
+        for (let index = 0; index < this.currentProducts.length; index++) {
+          if (product.productId == this.currentProducts[index].productId) {
+            this.currentProducts[index] = product;
+          }
+        }
+      }
+
+
+
+    }, error => {
+      alert('Failed to save product' + JSON.stringify(error));
+    });
   }
 
   public onClickAdd() {
     this.productDetailsForm.setValue({
-      productName : "",
-      productCategory : "",
-      productPrice : "",
-      imageURL : "",
+      productId: -1,
+      productName: "",
+      productCategory: "",
+      productPrice: "",
+      imageURL: "",
     });
   }
 
 
   public onProductClicked(product: Product) {
     this.productDetailsForm.setValue({
-      productName : product.productName,
-      productCategory : product.productCategory,
-      productPrice : product.productPrice,
-      imageURL : product.imageURL,
+      productId: product.productId,
+      productName: product.productName,
+      productCategory: product.productCategory,
+      productPrice: product.productPrice,
+      imageURL: product.imageURL,
     });
-    
+
   }
 
   public showProducts() {

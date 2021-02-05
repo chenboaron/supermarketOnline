@@ -6,10 +6,11 @@ const { CART_IS_NOT_OPEN } = require("../errors/error-type");
 
 const getAllCartItems = async (id) => {
 
-    const SQL = "SELECT c.product_id as productId, c.amount as amount, c.total_price as totalPrice, (SELECT product_name FROM products WHERE product_id = c.product_id) as productName FROM `shopping-carts` s LEFT JOIN `cart-items` c ON s.cart_id = c.cart_id WHERE s.cret_owner = ? AND s.is_open = '1'  ";
+    const SQL = "SELECT c.product_id as productId, c.amount as amount, c.total_price as totalPrice, (SELECT product_name FROM products WHERE product_id = c.product_id) as productName FROM `shopping-carts` s LEFT JOIN `cart-items` c ON s.cart_id = c.cart_id WHERE s.cret_owner =? AND s.is_open = '1'";
     const parameters = [id]
     try {
         let allCartItems = await connection.executeWithParameters(SQL, parameters);
+
         return allCartItems
     } catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);

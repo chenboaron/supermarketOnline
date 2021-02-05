@@ -41,12 +41,12 @@ const addProductToCart = async (request, newProductData) => {
 
 const getAllCartItems = async (request) => {
 
-
     let userCacheData = extractUserDataFromCache(request);
     let id = userCacheData.userId
     let allCartItems = await cartsDao.getAllCartItems(id);
-
-
+    if (allCartItems[0].productId === null) {
+        return [];
+    }
     return allCartItems;
 }
 

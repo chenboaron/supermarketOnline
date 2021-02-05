@@ -7,7 +7,7 @@ const router = express.Router();
 
 // ------------------------------ Handling The Vacations's Related Requests ------------------------------ //
 
-router.get('/', async (request, response, next) => {
+router.get('/getAllProducts', async (request, response, next) => {
 
     try {
         let allProducts = await productsLogic.getAllProducts();
@@ -18,50 +18,19 @@ router.get('/', async (request, response, next) => {
 });
 
 
-router.post('/addProduct', async (request, response, next) => {
-
+router.post('/', async (request, response, next) => {
+console.log("router.post('/', async (request, response, next) ");
     let newProductData = request.body;
 
     try {
-        let newlyAddedProduct = await productsLogic.addProduct(request, newProductData);
-
-        response.json(newlyAddedProduct);
-    } catch (error) {
-
-        return next(error);
-    }
-});
-
-router.post('/deleteProduct/:id', async (request, response, next) => {
-
-    let productID = request.params.id;
-
-    try {
-        await productsLogic.deleteProduct(request, productID);
-
+       await productsLogic.addOrEditProduct(request, newProductData);
         response.json();
-    }catch (error) {
-
+    } catch (error) {
         return next(error);
     }
 });
 
-router.put('/updateProduct/:id', async (request, response, next) => {
 
-
-    let productID = request.params.id;
-    let newProductData = request.body.newProductData;
-
-    try {
-
-        const imageURLToPreview = await productsLogic.updateProduct(request, productID, newProductData);
-
-        response.json(imageURLToPreview);
-    }catch (error) {
-
-        return next(error);
-    }
-});
 
 
 module.exports = router;

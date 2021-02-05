@@ -89,35 +89,34 @@ const getAllProducts = async () => {
 }
 
 
-const addProduct = async (request, newProductData) => {
-
+const addOrEditProduct = async (request, newProductData) => {
+console.log("const addOrEditProduct = async (request, newProductData)");
     let userCacheData = extractUserDataFromCache(request);
     let userType = userCacheData.userType;
 
     if (userType === "ADMIN") {
 
-        const imageName = Date.parse(new Date()) + '.jpg';
-        const imageURL = newProductData.imageURL;
+        // const imageName = Date.parse(new Date()) + '.jpg';
+        // const imageURL = newProductData.imageURL;
 
-        const options = {
-            url: imageURL,
-            dest: './uploads/' + imageName
-        }
+        // const options = {
+        //     url: imageURL,
+        //     dest: './uploads/' + imageName
+        // }
 
         if (isProductValid(newProductData)) {
 
-            newProductData.imageURL = imageName;
-            let newlyAddedProduct = await productDao.addProduct(newProductData);
+            // newProductData.imageURL = imageName;
+            await productDao.addOrEditProduct(newProductData);
 
-            await download.image(options).then(() => {
-                console.log('Image Saved Locally!');
-            })
-                .catch(() => {
-                    throw new ServerError(ErrorType.BAD_IMAGE);
-                });
+            // await download.image(options).then(() => {
+            //     console.log('Image Saved Locally!');
+            // })
+            //     .catch(() => {
+            //         throw new ServerError(ErrorType.BAD_IMAGE);
+            //     });
 
-            newlyAddedProduct[0].imageURL = `http://localhost:3001/${imageName}`;
-            return newlyAddedProduct;
+            // newlyAddedProduct[0].imageURL = `http://localhost:3001/${imageName}`;
         } else {
             throw new ServerError(ErrorType.ACTION_NOT_ALLOWED);
         }
@@ -126,65 +125,10 @@ const addProduct = async (request, newProductData) => {
     }
 }
 
-const deleteProduct = async (request, productId) => {
 
-    let userCacheData = extractUserDataFromCache(request);
-    let userType = userCacheData.userType;
-    let imageToDeleteFromServer = request.body.imageToDeleteFromServer;
-    console.log(imageToDeleteFromServer);
-    const imageFileName = imageToDeleteFromServer.split('/')[3];
-
-    if (userType === "ADMIN") {
-
-        await productsDao.deleteProduct(productId);
-
-        fs.unlinkSync('./uploads/' + imageFileName);
-    } else {
-        throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
-    }
-}
-
-const updateProduct = async (request, productId, newProductData) => {
-
-    let userCacheData = extractUserDataFromCache(request);
-    let userType = userCacheData.userType;
-
-    if (userType === "ADMIN") {
-
-        const imageName = Date.parse(new Date()) + '.jpg';
-        const imageURL = newProductData.imageURL;
-        const imageToDeleteFromServer = request.body.imageToDeleteFromServer;
-        const imageFileName = imageToDeleteFromServer.split('/')[3];
-        newProductData.imageURL = imageName;
-
-        if (isProductValid(newProductData)) {
-            const options = {
-                url: imageURL,
-                dest: './uploads/' + imageName
-            }
-
-            await productsDao.updateProduct(productId, newProductData);
-            await download.image(options).then(() => {
-
-                fs.unlinkSync('./uploads/' + imageFileName);
-
-                console.log('Image Updated!');
-            })
-                .catch(() => {
-                    throw new ServerError(ErrorType.BAD_IMAGE);
-                });
-
-            return "http://localhost:3001/" + imageName;
-        }
-    } else {
-        throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
-    }
-}
 
 
 module.exports = {
     getAllProducts,
-    addProduct,
-    updateProduct,
-    deleteProduct
+    addOrEditProduct
 };
