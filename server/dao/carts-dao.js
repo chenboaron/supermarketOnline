@@ -20,8 +20,8 @@ const getAllCartItems = async (id) => {
 
 
 
-const addProductToCart = async (isProductExist, newProductData, userId) => {
-    if (isProductExist) {
+const addProductToCart = async (isProductExistInCart, newProductData, userId) => {
+    if (isProductExistInCart) {
         const SQLUpdateQuery = "UPDATE `cart-items` SET amount=? , total_price=(SELECT product_price  FROM products  WHERE product_id = ?)*?  WHERE product_id=? And cart_id =(select cart_id from  `shopping-carts` where cret_owner = ? and is_open='1')";
         const parametersOfUpdate = [newProductData.amount, newProductData.productId, newProductData.amount, newProductData.productId, userId];
         try {
@@ -72,7 +72,7 @@ const openCart = async (userId, date) => {
     }
 }
 
-const isProductExist = async (product, userId) => {
+const isProductExistInCart = async (product, userId) => {
     const SQL = "SELECT product_id FROM `cart-items` WHERE product_id=? And cart_id =(select cart_id from  `shopping-carts` where cret_owner = ? and is_open='1')  ";
     const parameter = [product.productId, userId];
 
@@ -120,7 +120,7 @@ const deleteAllItems = async (id) => {
 
 module.exports = {
     addProductToCart,
-    isProductExist,
+    isProductExistInCart,
     getAllCartItems,
     deleteProduct,
     deleteAllItems,

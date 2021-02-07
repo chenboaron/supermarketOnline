@@ -9,9 +9,9 @@ const connection = mySQL.createConnection({
 });
 
 // Connecting to the DB
-connection.connect( error => {
+connection.connect(error => {
     if (error) {
-        
+
         console.log(`Failed To Create Connection: ${error}`);
         return;
     }
@@ -22,11 +22,12 @@ connection.connect( error => {
 
 function execute(SQL) {
 
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         connection.query(SQL, (error, result) => {
             if (error) {
 
                 console.log("Failed interacting with DB, calling reject");
+                console.log("error : " + error);
                 reject(error);
                 return;
             }
@@ -38,12 +39,13 @@ function execute(SQL) {
 
 function executeWithParameters(SQL, parameters) {
 
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         connection.execute(SQL, parameters, (error, result) => {
-            
+
             if (error) {
 
                 console.log("Failed interacting with DB, calling reject");
+                console.log("error : " + error);
 
                 // reject calls the 'catch' inside the DAO preset
                 reject(error);

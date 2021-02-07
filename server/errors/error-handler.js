@@ -1,5 +1,5 @@
 const errorHandler = (error, request, response, next) => {
-
+    console.log("error : " + error);
     // If No Authorization Token Was Found By The Login Filter
     if (error.status === 401) {
         response.status(401).json({ error: 'Your token is not valid, try re-logging' });

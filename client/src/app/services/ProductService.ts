@@ -19,7 +19,7 @@ export class ProductService {
         return this.http.get<Product>("http://localhost:3001/products/"+id);
     }
 
-    public addOrEditProduct(product : Product): Observable<Product> {
-        return this.http.post<Product>("http://localhost:3001/products", product);
+    public addOrEditProduct(product : Product): Observable<number> {
+        return this.http.post<number>("http://localhost:3001/products", product);
     }
 }

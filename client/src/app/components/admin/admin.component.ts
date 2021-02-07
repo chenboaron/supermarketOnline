@@ -53,7 +53,7 @@ export class AdminComponent implements OnInit {
       alert('Failed to get products ' + JSON.stringify(error));
     });
 
-    this.productId = new FormControl("");
+    this.productId = new FormControl("-1");
     this.productName = new FormControl("", [Validators.required, Validators.pattern("[a-zA-Z ]{1,15}")]);
     this.productCategory = new FormControl("", [Validators.required, Validators.pattern("[a-zA-Z ]{1,30}")]);
     this.productPrice = new FormControl("", [Validators.required, Validators.pattern("[0-9]{4,25}")]);
@@ -78,21 +78,15 @@ export class AdminComponent implements OnInit {
 
     let observable = this.productService.addOrEditProduct(product);
 
-    observable.subscribe(() => {
+    observable.subscribe((id) => {
       if (product.productId == -1) {
-        let observable = this.productService.getAllProducts();
+        console.log("id : " + id);
+        
+        product.productId = id;
+        this.currentProducts.push(product);
+        console.log( this.currentProducts);
+        
 
-        observable.subscribe(productsList => {
-          this.products = productsList;
-          this.currentProducts = productsList;
-          this.meatAndFish = this.currentProducts.filter(Product => Product.productCategory === "Meat and fish");
-          this.drinking = this.currentProducts.filter(Product => Product.productCategory === "drinking");
-          this.fruitsAndVegetables = this.currentProducts.filter(Product => Product.productCategory == "Fruits and Vegetables");
-          this.milkAndEggs = this.currentProducts.filter(Product => Product.productCategory === "Milk and eggs");
-
-        }, error => {
-          alert('Failed to get products ' + JSON.stringify(error));
-        });
       } else {
         for (let index = 0; index < this.currentProducts.length; index++) {
           if (product.productId == this.currentProducts[index].productId) {

@@ -13,7 +13,7 @@ const isProductValid = (newProductData) => {
     const isProductNameValid = validateProductName(newProductData.productName.trim());
     const isProductImageURLValid = validateProductImageURL(newProductData.imageURL.trim());
     const isProductCategoryValid = validateProductCategory(newProductData.productCategory.trim());
-    const isProductPriceValid = validateProductPrice(newProductData.ProductPrice);
+    const isProductPriceValid = validateProductPrice(newProductData.productPrice);
 
     if (isProductNameValid) {
         if (isProductPriceValid) {
@@ -29,7 +29,6 @@ const isProductValid = (newProductData) => {
 }
 
 const validateProductName = (trimmedProductName) => {
-
     if (trimmedProductName != "") {
         if (trimmedProductName.length >= 3) {
             if (trimmedProductName.length <= 44) {
@@ -42,7 +41,6 @@ const validateProductName = (trimmedProductName) => {
 }
 
 const validateProductImageURL = (trimmedProductImageURL) => {
-
     if (trimmedProductImageURL !== "") {
         if (trimmedProductImageURL.length >= 10) {
             if (trimmedProductImageURL.length <= 998) {
@@ -55,7 +53,6 @@ const validateProductImageURL = (trimmedProductImageURL) => {
 }
 
 const validateProductCategory = (trimmedProductCategory) => {
-
     if (trimmedProductCategory !== "") {
         if (trimmedProductCategory.length >= 1) {
             if (trimmedProductCategory.length <= 249) {
@@ -90,7 +87,6 @@ const getAllProducts = async () => {
 
 
 const addOrEditProduct = async (request, newProductData) => {
-console.log("const addOrEditProduct = async (request, newProductData)");
     let userCacheData = extractUserDataFromCache(request);
     let userType = userCacheData.userType;
 
@@ -103,11 +99,16 @@ console.log("const addOrEditProduct = async (request, newProductData)");
         //     url: imageURL,
         //     dest: './uploads/' + imageName
         // }
-
         if (isProductValid(newProductData)) {
+            let isProductExist= await productsDao.isProductExist(newProductData.productId)
+            if (isProductExist) {
+                await productsDao.updateProduct(newProductData);
+            } else {
+                  let id =await productsDao.addProduct(newProductData);
+                  return id;
 
+            }
             // newProductData.imageURL = imageName;
-            await productDao.addOrEditProduct(newProductData);
 
             // await download.image(options).then(() => {
             //     console.log('Image Saved Locally!');

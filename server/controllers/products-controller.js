@@ -19,12 +19,11 @@ router.get('/getAllProducts', async (request, response, next) => {
 
 
 router.post('/', async (request, response, next) => {
-console.log("router.post('/', async (request, response, next) ");
     let newProductData = request.body;
 
     try {
-       await productsLogic.addOrEditProduct(request, newProductData);
-        response.json();
+      let id =  await productsLogic.addOrEditProduct(request, newProductData);
+        response.json(id);
     } catch (error) {
         return next(error);
     }

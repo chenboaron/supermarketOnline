@@ -13,72 +13,59 @@ const getAllProducts = async () => {
         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
     }
 }
-const addOrEditProduct = async (newProductData) => {
-    console.log("addOrEditProduct function in dao");
-    // const SQLInsertQuery = `INSERT INTO
-    //                                 products
-    //                                 (
-    //                                     product_name,
-    //                                     product_category,
-    //                                     product_Price,
-    //                                     product_image_URL,
-    //                                 )
-    //                                 VALUES (?, ?, ?, ?)`;
+const addProduct = async (newProductData) => {
+    const SQLInsertQuery = "INSERT INTO products ( product_name, product_category, product_Price, product_image_URL ) VALUES (?,  (SELECT category_id FROM `products-categories` WHERE category_name =?), ?, ?)";
+    console.log("newProductData : " + JSON.stringify(newProductData));
 
-    // const parameters = [newProductData.productName, newProductData.productCategory, newProductData.productPrice, newProductData.imageURL];
-
-    // const getnewlyAddedProductSQL = `SELECT
-    //                                         product_id as productId,
-    //                                         product_name as productName,
-    //                                         product_category as productCategory,
-    //                                         product_Price as productPrice,
-    //                                         product_image_URL as imageURL,
-    //                                     From
-    //                                         products
-    //                                     WHERE
-    //                                         product_id = (
-    //                                             SELECT
-    //                                                 MAX(product_id)
-    //                                             FROM
-    //                                                 products
-    //                                         )`;
-
-    // try {
-    //     await connection.executeWithParameters(SQLInsertQuery, parameters);
-    //     let newlyAddedProduct = await connection.execute(getnewlyAddedProductSQL);
-
-    //     return newlyAddedProduct;
-    // }catch (error) {
-    //     throw new ServerError(ErrorType.GENERAL_ERROR);
-    // }
+    const parameters = [newProductData.productName, newProductData.productCategory, newProductData.productPrice, newProductData.imageURL];
+    try {
+        let id = await connection.executeWithParameters(SQLInsertQuery, parameters);
+        console.log("id : " + JSON.stringify(id));
+        return id.insertId;
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR);
+    }
 }
 
-// const updateProduct = async (productId, newProductData) => {
+const updateProduct = async (newProductData) => {
 
-//     const SQL = `UPDATE
-//                     products
-//                     SET
-//                     product_name = ?,
-//                     product_category = ?,
-//                     product_Price = ?,
-//                     product_image_URL = ?,
-//                     WHERE
-//                     product_id = ?`;
+    const SQL = "UPDATE products SET product_name = ?, product_category = (SELECT category_id FROM `products-categories` WHERE category_name =?), product_Price = ?, product_image_URL = ? WHERE product_id = ?";
+    const parameters = [newProductData.productName, newProductData.productCategory, newProductData.productPrice, newProductData.imageURL, newProductData.productId];
 
-//     const parameters = [newProductData.productName, newProductData.productCategory, newProductData.productPrice, newProductData.imageURL, productId];
+    try {
+        await connection.executeWithParameters(SQL, parameters);
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
 
-//     try {
-//         await connection.executeWithParameters(SQL, parameters);
-//     } catch (error) {
-//         throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
-//     }
-// }
+const isProductExist = async (productId) => {
+
+    const SQL = "SELECT product_id FROM products WHERE product_id=?";
+    const parameter = [productId];
+
+    console.log("productId : " + productId);
+    let productAlreadyExists;
+
+    try {
+        productAlreadyExists = await connection.executeWithParameters(SQL, parameter);
+        if (productAlreadyExists.length === 0) {
+            return false;
+        }
+        return true;
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, SQL, error);
+    }
+}
 
 
 
 
 module.exports = {
     getAllProducts,
-    addOrEditProduct,
-    
+    addProduct,
+    updateProduct,
+    isProductExist,
+
+
 };

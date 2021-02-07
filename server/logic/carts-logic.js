@@ -14,8 +14,8 @@ const addProductToCart = async (request, newProductData) => {
     let isCartOpen = await cartsDao.isCartOpen(userId);
     if (isCartOpen) {
         if (userType === "USER") {
-            let isProductExist = await cartsDao.isProductExist(newProductData, userId);
-            await cartsDao.addProductToCart(isProductExist, newProductData, userId);
+            let isProductExistInCart = await cartsDao.isProductExistInCart(newProductData, userId);
+            await cartsDao.addProductToCart(isProductExistInCart, newProductData, userId);
 
         } else {
             throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
@@ -28,8 +28,8 @@ const addProductToCart = async (request, newProductData) => {
                 ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
                 ('00' + date.getUTCDate()).slice(-2);
             await cartsDao.openCart(userId, date);
-            let isProductExist = await cartsDao.isProductExist(newProductData, userId);
-            await cartsDao.addProductToCart(isProductExist, newProductData, userId);
+            let isProductExistInCart = await cartsDao.isProductExistInCart(newProductData, userId);
+            await cartsDao.addProductToCart(isProductExistInCart, newProductData, userId);
 
         } else {
             throw new ServerError(ErrorType.USER_IS_NOT_AUTHORIZED);
