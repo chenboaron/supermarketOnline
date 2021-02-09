@@ -26,7 +26,7 @@ const addUser = async (userData) => {
     if (isUserExistByUsername) {
         throw new ServerError(ErrorType.USER_NAME_ALREADY_EXIST);
     }
-  
+
     if (userData.password != userData.passwordConfirm) {
         throw new ServerError(ErrorType.CONFIRM_PASSWORD_DOES_NOT_MATCH);
     }
@@ -140,7 +140,8 @@ const saveUserDataToServerCache = (userId, userName, userType, token) => {
     const userCacheData = {
         userId: userId,
         userName: userName,
-        userType: userType
+        userType: userType,
+        token: token
     };
     userCache.set(token, userCacheData);
 }
@@ -186,7 +187,7 @@ const login = async (userData, isLoginRightAfterRegistration) => {
     const userType = userLoginData.userType;
     const firstName = userLoginData.firstName;
     const userId = userLoginData.userId;
-    const saltedFirstName= getSaltedUserName(firstName);
+    const saltedFirstName = getSaltedUserName(firstName);
     const token = generateJWTtoken(saltedFirstName);
     saveUserDataToServerCache(userId, firstName, userType, token);
     const userSuccessfulLoginServerResponse = {

@@ -81,18 +81,21 @@ export class AdminComponent implements OnInit {
     observable.subscribe((id) => {
       if (product.productId == -1) {
         console.log("id : " + id);
-        
+
         product.productId = id;
-        this.currentProducts.push(product);
-        console.log( this.currentProducts);
-        
+        this.products.push(product);
+        this.currentProducts = this.products;
+        console.log(this.currentProducts);
+
 
       } else {
-        for (let index = 0; index < this.currentProducts.length; index++) {
-          if (product.productId == this.currentProducts[index].productId) {
-            this.currentProducts[index] = product;
+        for (let index = 0; index < this.products.length; index++) {
+          if (product.productId == this.products[index].productId) {
+            this.products[index] = product;
           }
         }
+        this.currentProducts = this.products;
+
       }
 
 

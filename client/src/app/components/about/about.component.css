@@ -1,16 +1,7 @@
 p{
 font-size: x-large;
 }
-.image{
-    height: 200px;
-    width: 300px;
-    background-image: url(2681795.png);
-    background-size: auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 
 .panelB{
     width: 90%;

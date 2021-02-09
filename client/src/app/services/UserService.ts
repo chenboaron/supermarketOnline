@@ -26,6 +26,11 @@ export class UserService {
         return this.http.post<SuccessfulLoginServerResponse>("http://localhost:3001/users/register", userRegisterDetails);
     }
 
+    public logout(): Observable<any> {
+
+        return this.http.post("http://localhost:3001/users/logout", {});
+    }
+
     public getLoginToken(): string{
         return this.loginToken;
     }

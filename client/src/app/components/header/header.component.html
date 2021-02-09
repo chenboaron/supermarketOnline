@@ -1,31 +1,34 @@
-
 <div>
-    <!--Navbar-->
-    <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan" [containerInside]="false">
-    
-      <!-- Navbar brand -->
-      <mdb-navbar-brand><a class="navbar-brand" href="#"><span class="material-icons">shopping_cart</span>online shopping</a></mdb-navbar-brand>
-    
-      <!-- Collapsible content -->
-      <links>
-    
-        <!-- Links -->
-        <ul class="navbar-nav ml-auto">
-          
-          <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="cog"></mdb-icon> Logout</a>
-          </li>
-    
-          <li class="nav-item">
-            <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" mdbWavesEffect>
-                <mdb-icon fas icon="user"></mdb-icon> Profile<span class="caret"></span></a>
-          </li>
-    
-        </ul>
-        <!-- Links -->
-      </links>
-      <!-- Collapsible content -->
-    
-    </mdb-navbar>
-    <!--/.Navbar-->
+  <!--Navbar-->
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan" [containerInside]="false">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" href="#"><span class="material-icons">shopping_cart</span>online
+        shopping</a></mdb-navbar-brand>
+
+    <!-- Collapsible content -->
+    <links>
+
+      <!-- Links -->
+      <ul class="navbar-nav ml-auto">
+
+
+        <li class="nav-item">
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" mdbWavesEffect>
+            <mdb-icon fas icon="user"></mdb-icon><span class="caret">welcome </span><span id="name" class="caret"></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="btn btn-outline-danger" data-mdb-ripple-color="dark" id="" (click)="logout()" >
+            Logout
+          </button>
+        </li>
+
+      </ul>
+      <!-- Links -->
+    </links>
+    <!-- Collapsible content -->
+
+  </mdb-navbar>
+  <!--/.Navbar-->
 </div>
